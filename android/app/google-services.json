@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1017527755567",
+    "firebase_url": "https://flutter-kkhelper.firebaseio.com",
+    "project_id": "flutter-kkhelper",
+    "storage_bucket": "flutter-kkhelper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017527755567:android:ef5fcd3abafc48ae",
+        "android_client_info": {
+          "package_name": "kel1.mobtek.kkhelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017527755567-jafcr7hjj8col0obsiepefnkf12bjofb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kel1.mobtek.kkhelper",
+            "certificate_hash": "0625dd92ca9b558d25d69dd980c06de4eb03846f"
+          }
+        },
+        {
+          "client_id": "1017527755567-mf0fcp0u6aantuh3j6du2l68dc15juov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmIVk86GDvB7gc8DBhWsUo4Aa2genFWhk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017527755567-mf0fcp0u6aantuh3j6du2l68dc15juov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

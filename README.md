@@ -1,8 +1,5 @@
 # kk_helper
 
-A new Flutter application.
+Membantu warga surabaya dalam menggurus surat kependudukan.
 
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+Build : flutter

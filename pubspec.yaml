@@ -31,6 +31,9 @@ dependencies:
   intl:
   flutter_date_picker:
   carousel_slider:
+  shared_preferences:
+  random_string:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

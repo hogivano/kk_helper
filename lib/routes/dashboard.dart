@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:kk_helper/logger.dart';
+import 'package:kk_helper/model/users.dart';
 import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 import 'package:kk_helper/routes/login.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,9 +12,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:dio/dio.dart';
 import 'package:kk_helper/widget/Ddrawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kk_helper/local_disk.dart';
 
 class Dashboard extends StatefulWidget{
   final FirebaseUser firebaseUser;
@@ -27,7 +28,10 @@ class Dashboard extends StatefulWidget{
 class _dashboardState extends State<Dashboard>{
   final GlobalKey<ScaffoldState> _scaffoldStateKey = new GlobalKey<ScaffoldState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
   File _image;
+
+  Users user = new Users();
 
   static final Options options = new Options(
       baseUrl: "http://dispendukcapil.surabaya.go.id/ceknik_sby",
@@ -81,8 +85,45 @@ class _dashboardState extends State<Dashboard>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    new Connectivity().onConnectivityChanged.listen((result){
-      Fluttertoast.showToast(msg: result.toString());
+//    new Connectivity().onConnectivityChanged.listen((result){
+//      Fluttertoast.showToast(msg: result.toString());
+//    });
+    new LocalDisk().getString("user").then((str){
+      if (str == null){
+        _database.reference().child("user").once().then((DataSnapshot snapshot){
+          Map<dynamic, dynamic> values = snapshot.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              if (value["noTelp"] == widget.firebaseUser.phoneNumber) {
+                user.setKey = key;
+                user.setNama = value["nama"];
+                user.setNoTelp = value["noTelp"];
+                user.setImage = value["image"];
+                user.setRole = value["role"];
+
+                new LocalDisk().setString("user", jsonEncode(user.toJsonWithKey()));
+              } else if (value["email"] == widget.firebaseUser.email){
+                user.setKey = key;
+                user.setNama = value["nama"];
+                user.setEmail = value["email"];
+                user.setImage = value["image"];
+                user.setRole = value["role"];
+
+                new LocalDisk().setString("user", jsonEncode(user.toJsonWithKey()));
+
+                Fluttertoast.showToast(msg: "masukk di email");
+              }
+            });
+          }
+        });
+      } else {
+        Map userMap = jsonDecode(str);
+        this.user = new Users.fromJsonWithKey(userMap);
+        print("user key " + this.user.Key);
+        Fluttertoast.showToast(msg: 'masuk ada isi');
+      }
+    }, onError: (){
+      Fluttertoast.showToast(msg: "error pengambilan local disk");
     });
   }
 
@@ -119,7 +160,8 @@ class _dashboardState extends State<Dashboard>{
             ),
           ),
         ),
-        drawer: new Ddrawer(firebaseUser: widget.firebaseUser),
+        drawer: this.user.noTelp != "" || this.user.email != "" ? new Ddrawer(firebaseUser: widget.firebaseUser)
+                : new Ddrawer(firebaseUser: widget.firebaseUser),
         body: new SafeArea(
             child: new Column(
               children: <Widget>[

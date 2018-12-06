@@ -72,4 +72,24 @@ class DataKeluarga {
   set setPekerjaan (String pekerjaan) => this._pekerjaan = pekerjaan;
   set setNamaIbu (String namaIbu) => this._namaIbu = namaIbu;
   set setNamaAyah (String namaAyah) => this._namaAyah = namaAyah;
+
+  DataKeluarga.fromJson(Map<String, dynamic> json){
+    _nama = json["nama"];
+    _noKtpPen = json["noKtpPen"];
+    _alamatSblm = json["alamatSblm"];
+    _jenisKelamin = json["jenisKelamin"];
+    _tempatLahir = json["tempatLahir"];
+    _ttl = json["ttl"];
+    _umur = json["umur"];
+    _golDarah = json["golDarah"];
+    _agama = json["agama"];
+    _statusKawin = json["statusKawin"];
+    _statusHub = json["statusHub"];
+    _kelainanFisik = json["kelainanFisik"];
+    _penyandangCacat = json["penyandangCacat"];
+    _pendidikanTerakhir = json["pendidikanTerakhir"];
+    _pekerjaan = json["pekerjaan"];
+    _namaIbu = json["namaIbu"];
+    _namaAyah = json["namaAyah"];
+  }
 }

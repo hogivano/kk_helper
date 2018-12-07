@@ -12,6 +12,7 @@ import 'package:kk_helper/routes/hilang_kk.dart';
 import 'package:kk_helper/routes/perubahan_kk.dart';
 import 'package:kk_helper/routes/kurang_anggota.dart';
 import 'package:kk_helper/routes/tambah_anggota.dart';
+import 'package:kk_helper/local_disk.dart';
 
 class Ddrawer extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -27,6 +28,7 @@ class _dDrawer extends State<Ddrawer> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _logout() async {
+    await new LocalDisk().remove("user");
     await _auth.signOut().whenComplete(() {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (context) => Login(),
@@ -42,6 +44,8 @@ class _dDrawer extends State<Ddrawer> {
 
   @override
   Widget build(BuildContext context) {
+  print(widget.firebaseUser.photoUrl.toString());
+  print(widget.firebaseUser.phoneNumber.toString());
     // TODO: implement build
     return new SafeArea(
         child: new Drawer(
@@ -57,16 +61,16 @@ class _dDrawer extends State<Ddrawer> {
                   fontSize: 20.0),
             ),
             accountEmail: new Text(
-              widget.firebaseUser.email != "email"
+              widget.firebaseUser.email != null
                   ? widget.firebaseUser.email
-                  : widget.firebaseUser.phoneNumber,
+                  : widget.firebaseUser.phoneNumber.toString(),
               style: new TextStyle(color: Colors.white),
             ),
             decoration: new BoxDecoration(
               gradient: new LinearGradient(colors: [
-                const Color(0xff55b9fc),
-                const Color(0xff2999e5),
-                const Color(0xff4b72f2),
+                Color(0xff1fb6f7),
+                Color(0xFF35ade0),
+                Color(0xff20b7f7)
               ]),
             ),
             onDetailsPressed: () {},
@@ -124,7 +128,7 @@ class _dDrawer extends State<Ddrawer> {
                     ),
                     new ListTile(
                       leading: new Icon(Icons.restore_page),
-                      title: new Text("KK Hilang"),
+                      title: new Text("KK Hilang/Rusak"),
                       onTap: () {
                         return Navigator.of(context)
                             .pushReplacement(new MaterialPageRoute(

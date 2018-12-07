@@ -13,6 +13,8 @@ import 'package:kk_helper/model/data_tambah_kk.dart';
 import 'package:kk_helper/model/data_keluarga.dart';
 import 'package:flutter/services.dart';
 import 'package:kk_helper/model/data_hilang_kk.dart';
+import 'package:kk_helper/model/data_anggota_kurang.dart';
+import 'package:kk_helper/model/anggota_kurang.dart';
 
 class Track extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -29,6 +31,8 @@ class _trackState extends State<Track>{
   Users user = new Users();
   List<DataTambahKK> listTambahKK = [];
   List<DataHilangKK> listHilangKK = [];
+  List<DataAnggotaKurang> listAnggotaKurang = [];
+
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   bool load = false;
@@ -48,7 +52,7 @@ class _trackState extends State<Track>{
     });
   }
 
-  _dialogConfirm(String key){
+  _dialogConfirm(String key, String parent){
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
@@ -77,7 +81,7 @@ class _trackState extends State<Track>{
           new FlatButton(
             onPressed: () {
               Navigator.of(context).pop(true);
-              _deleteTap(key);
+              _deleteTap(key, parent);
             },
             child: new Text(
               'Ya',
@@ -96,55 +100,175 @@ class _trackState extends State<Track>{
 //    Fluttertoast.showToast(msg: "index info : " + index.toString());
   }
 
-  _deleteTap(String key) async{
-    DataTambahKK del = _searchByKey(key);
-    Fluttertoast.showToast(msg: del.kepalaKeluarga);
-    setState(() {
-      load = true;
-    });
-    if (del.ketDomisili != ""){
-      String ketDomisili = _replaceLinkFirebaseStorage(del.ketDomisili);
-      int tanya = ketDomisili.indexOf("?");
-      ketDomisili = ketDomisili.substring(0, tanya);
-
-      _delImage(ketDomisili);
-    }
-
-    for(int i = 0; i < del.pekerjaan.length; i++){
-      String ket = _replaceLinkFirebaseStorage(del.pekerjaan[i]);
-      int index = ket.indexOf("?");
-      ket = ket.substring(0, index);
-
-      await _delImage(ket);
-    }
-
-    for(int i = 0; i < del.aktaKawin.length; i++){
-      String ket = _replaceLinkFirebaseStorage(del.aktaKawin[i]);
-      int index = ket.indexOf("?");
-      ket = ket.substring(0, index);
-
-      await _delImage(ket);
-    }
-
-    for(int i = 0; i < del.pindahDaatng.length; i++){
-      String ket = _replaceLinkFirebaseStorage(del.pindahDaatng[i]);
-      int index = ket.indexOf("?");
-      ket = ket.substring(0, index);
-
-      await _delImage(ket);
-    }
-
-    await _database.reference().child("tambah_kk").child(key).remove().whenComplete((){
-      Fluttertoast.showToast(msg: "berhasil menghapus");
+  _deleteTap(String key, String parent) async{
+    if (parent == "tambah_kk"){
+      DataTambahKK del = _searchByKeyTambahKK(key);
       setState(() {
-        load = false;
+        load = true;
       });
-    }).catchError((err){
+      if (del.ketDomisili != ""){
+        String ketDomisili = _replaceLinkFirebaseStorage(del.ketDomisili);
+        int tanya = ketDomisili.indexOf("?");
+        ketDomisili = ketDomisili.substring(0, tanya);
+
+        _delImage(ketDomisili);
+      }
+
+      try {
+        for(int i = 0; i < del.pekerjaan.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.pekerjaan[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      try {
+        for(int i = 0; i < del.aktaKawin.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.aktaKawin[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      try {
+        for(int i = 0; i < del.pindahDaatng.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.pindahDaatng[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      await _database.reference().child("tambah_kk").child(key).remove().whenComplete((){
+        Fluttertoast.showToast(msg: "berhasil menghapus");
+        setState(() {
+          load = false;
+        });
+      }).catchError((err){
+        setState(() {
+          load = false;
+        });
+        Fluttertoast.showToast(msg: "gagal menghapus");
+      });
+    } else if (parent == "hilang_kk"){
+      DataHilangKK del = _searchByKeyHilangKK(key);
       setState(() {
-        load = false;
+        load = true;
       });
-      Fluttertoast.showToast(msg: "gagal menghapus");
-    });
+
+      if (del.kkLama != ""){
+        String kkLama = _replaceLinkFirebaseStorage(del.kkLama);
+        int tanya = kkLama.indexOf("?");
+        kkLama = kkLama.substring(0, tanya);
+
+        _delImage(kkLama);
+      }
+
+      if (del.ktp != ""){
+        String ktp = _replaceLinkFirebaseStorage(del.ktp);
+        int tanya = ktp.indexOf("?");
+        ktp = ktp.substring(0, tanya);
+
+        _delImage(ktp);
+      }
+
+      if (del.kehilanganPolisi != ""){
+        String kehilanganPolisi = _replaceLinkFirebaseStorage(del.kehilanganPolisi);
+        int tanya = kehilanganPolisi.indexOf("?");
+        kehilanganPolisi = kehilanganPolisi.substring(0, tanya);
+
+        _delImage(kehilanganPolisi);
+      }
+
+      if (del.pengantarRtRw != ""){
+        String pengantarRtRw = _replaceLinkFirebaseStorage(del.pengantarRtRw);
+        int tanya = pengantarRtRw.indexOf("?");
+        pengantarRtRw = pengantarRtRw.substring(0, tanya);
+
+        _delImage(pengantarRtRw);
+      }
+
+      await _database.reference().child("hilang_kk").child(key).remove().whenComplete((){
+        Fluttertoast.showToast(msg: "berhasil menghapus");
+        setState(() {
+          load = false;
+        });
+      }).catchError((err){
+        setState(() {
+          load = false;
+        });
+        Fluttertoast.showToast(msg: "gagal menghapus");
+      });
+    } else if (parent == "kurang_anggota"){
+      DataAnggotaKurang del = _searchByKeyAnggotaKurang(key);
+      setState(() {
+        load = true;
+      });
+      if (del.kk != ""){
+        String kk = _replaceLinkFirebaseStorage(del.kk);
+        int tanya = kk.indexOf("?");
+        kk = kk.substring(0, tanya);
+
+        _delImage(kk);
+      }
+
+      if (del.pengantar != ""){
+        String pengantar = _replaceLinkFirebaseStorage(del.pengantar);
+        int tanya = pengantar.indexOf("?");
+        pengantar = pengantar.substring(0, tanya);
+
+        _delImage(pengantar);
+      }
+
+      try {
+        for(int i = 0; i < del.pindah.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.pindah[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      try {
+        for(int i = 0; i < del.kematian.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.kematian[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      await _database.reference().child("kurang_anggota").child(key).remove().whenComplete((){
+        Fluttertoast.showToast(msg: "berhasil menghapus");
+        setState(() {
+          load = false;
+        });
+      }).catchError((err){
+        setState(() {
+          load = false;
+        });
+        Fluttertoast.showToast(msg: "gagal menghapus");
+      });
+    } else if (parent == "tambah_anggota"){
+
+    }
   }
 
   String _replaceLinkFirebaseStorage(String link){
@@ -169,7 +293,7 @@ class _trackState extends State<Track>{
     }
   }
 
-  DataTambahKK _searchByKey(String key){
+  DataTambahKK _searchByKeyTambahKK(String key){
     DataTambahKK data = new DataTambahKK();
     for(int i = 0; i < listTambahKK.length; i++){
       if (listTambahKK[i].key == key){
@@ -180,30 +304,43 @@ class _trackState extends State<Track>{
     return data;
   }
 
+  DataHilangKK _searchByKeyHilangKK(String key){
+    DataHilangKK data = new DataHilangKK();
+    for(int i = 0; i < listHilangKK.length; i++){
+      if (listHilangKK[i].key == key){
+        data = listHilangKK[i];
+        break;
+      }
+    }
+    return data;
+  }
+
+  DataAnggotaKurang _searchByKeyAnggotaKurang(String key){
+    DataAnggotaKurang data = new DataAnggotaKurang();
+    for(int i = 0; i < listAnggotaKurang.length; i++){
+      if (listAnggotaKurang[i].key == key){
+        data = listAnggotaKurang[i];
+        break;
+      }
+    }
+    return data;
+  }
+
   List<Widget> _getTambahKK(DataSnapshot snapshot){
     List<Widget> wgt = [];
     int index = 0;
+    int count = 0;
     listTambahKK = [];
     listHilangKK = [];
+    listAnggotaKurang = [];
     Map<dynamic, dynamic> values = snapshot.value;
-    if (values.length == 1){
-      return <Widget> [
-        new Container(
-          height: MediaQuery.of(context).size.height-80,
-          alignment: Alignment(0, 0),
-          child: new Text(
-            "anda belum melakukan apapun",
-            style: new TextStyle(color: Colors.black38),
-          ),
-        ),
-      ];
-    }
     values.forEach((key, value){
       if (key != "user"){
         if (value != null){
           Map<dynamic, dynamic> list = value;
           list.forEach((keyList, valList){
             if (valList["idUser"] == user.Key){
+              count++;
               String d = valList["date"];
               var date = d.split(" ");
               var tanggal = date[0].split("-");
@@ -302,6 +439,70 @@ class _trackState extends State<Track>{
                 });
 
                 listHilangKK.add(dhk);
+              } else if (key == "kurang_anggota"){
+                DataAnggotaKurang dak = new DataAnggotaKurang();
+                dak.setKey = keyList;
+                dak.setAccKecamatan = valList["accKecamatan"];
+                dak.setaccKelurahan = valList["accKelurahan"];
+                dak.setAlamat = valList["alamat"];
+                dak.setDate = valList["date"];
+                dak.setIdUser = valList["idUser"];
+                dak.setKecamatan = valList["kecamatan"];
+                dak.setKelurahan = valList["kelurahan"];
+                dak.setKepalaKeluarga = valList["kepalaKeluarga"];
+                dak.setReject = valList["reject"];
+                dak.setRejectKeterangan = valList["rejectKeterangan"];
+                dak.setRt = valList["rt"];
+                dak.setRw = valList["rw"];
+                dak.setNoKK = valList["noKK"];
+
+                String strAnggota = jsonEncode(valList["anggotaKeluarga"]);
+                List<dynamic> mapping = jsonDecode(strAnggota);
+
+                List<DataKeluarga> listDk = [];
+
+                mapping.forEach((str){
+                  String jsonStr = jsonEncode(str);
+                  DataKeluarga baru = DataKeluarga.fromJson(jsonDecode(jsonStr));
+                  listDk.add(baru);
+                });
+                dak.setAnggotaKeluarga = listDk;
+                
+                String strKurang = jsonEncode(valList["kurangAnggota"]);
+                List<dynamic> mapp = jsonDecode(strKurang);
+
+                List<AnggotaKurang> listAk = [];
+                mapp.forEach((str){
+                  String jsonStr = jsonEncode(str);
+                  AnggotaKurang baru = AnggotaKurang.fromJson(jsonDecode(jsonStr));
+                  listAk.add(baru);
+                });
+
+                dak.setAnggotaKurang = listAk;
+
+                String strImage = jsonEncode(valList["image"]);
+                Map<dynamic, dynamic> mapImage = jsonDecode(strImage);
+                mapImage.forEach((key, valImage){
+                  if (key == "kk"){
+                    dak.setKK = valImage;
+                  } else if (key == "pengantarRtRw"){
+                    dak.setPengantar = valImage;
+                  } else {
+                    List<String> imgArray = [];
+                    List<dynamic> mapArray = jsonDecode(jsonEncode(valImage));
+                    mapArray.forEach((str){
+                      imgArray.add(str);
+                    });
+
+                    if (key == "keteranganPindah"){
+                      dak.setPindah = imgArray;
+                    } else if (key == "keteranganKematian"){
+                      dak.setKematian = imgArray;
+                    }
+                  }
+                });
+
+                listAnggotaKurang.add(dak);
               }
               wgt.add(
                 new Container(
@@ -314,7 +515,8 @@ class _trackState extends State<Track>{
                         width: 10.0,
                         height: 150.0,
                         color: key == "tambah_kk" ? Colors.redAccent :
-                        key == "hilang_kk" ? Colors.amberAccent : Colors.deepOrangeAccent,
+                        key == "hilang_kk" ? Colors.amberAccent :
+                        key == "kurang_anggota" ? Colors.deepOrangeAccent : Colors.greenAccent,
                       ),
                       new Expanded(
                           child: new Container(
@@ -471,7 +673,7 @@ class _trackState extends State<Track>{
                                               new Expanded(
                                                   child: new FlatButton(
                                                       onPressed: () {
-                                                        _dialogConfirm(keyList);
+                                                        _dialogConfirm(keyList, key);
                                                       },
                                                       child: new Icon(
                                                         Icons.delete,
@@ -511,6 +713,18 @@ class _trackState extends State<Track>{
       }
       index++;
     });
+    if (count == 0){
+      return <Widget> [
+        new Container(
+          height: MediaQuery.of(context).size.height-80,
+          alignment: Alignment(0, 0),
+          child: new Text(
+            "anda belum melakukan apapun",
+            style: new TextStyle(color: Colors.black38),
+          ),
+        ),
+      ];
+    }
     return wgt;
   }
 
@@ -579,7 +793,7 @@ class _trackState extends State<Track>{
         appBar: new GradientAppBar(
           elevation: 4.0,
           backgroundColorStart: Color(0xFF35ade0),
-          backgroundColorEnd: Color(0xff4b72f2),
+          backgroundColorEnd: Color(0xff20b7f7),
           leading: new IconButton(
               icon: new Icon(
                 Icons.menu,

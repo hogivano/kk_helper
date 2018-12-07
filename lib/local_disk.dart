@@ -6,8 +6,16 @@ class LocalDisk {
     return prefs.getString(key);
   }
 
+  remove(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
+
+  }
+
   setString(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
   }
+
+
 }

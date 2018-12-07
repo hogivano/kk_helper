@@ -34,6 +34,8 @@ dependencies:
   shared_preferences:
   random_string:
   path_provider:
+  flutter_local_notifications:
+  firebase_messaging:
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +57,10 @@ flutter:
   assets:
    - assets/image/bg-login.png
    - assets/image/gologo.png
+   - assets/image/addDoc.png
+   - assets/image/edit.png
+   - assets/image/person.png
+   - assets/image/kk-helper.png
   # - image/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

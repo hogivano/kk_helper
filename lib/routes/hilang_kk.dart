@@ -2592,7 +2592,7 @@ class _hilangKKState extends State<HilangKK>{
               appBar: new GradientAppBar(
                 elevation: 4.0,
                 backgroundColorStart: Color(0xFF35ade0),
-                backgroundColorEnd: Color(0xff4b72f2),
+                backgroundColorEnd: Color(0xff20b7f7),
                 leading: new IconButton(
                     icon: new Icon(
                       Icons.menu,

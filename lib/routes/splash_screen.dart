@@ -39,7 +39,13 @@ class _SplashScreenState extends State<SplashScreen> {
             fit: StackFit.expand,
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(color: new Color(0xFF6ecce2)),
+                decoration: BoxDecoration(
+                  gradient:  LinearGradient(
+                      colors: [Color(0xff1fb6f7), Color(0xFF35ade0), Color(0xff20b7f7)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight
+                  ),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -49,19 +55,19 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              CircleAvatar(
-                                backgroundColor: Color(0xFF6ecce2),
-                                radius: 50.0,
+                              new Image.asset(
+                                "assets/image/kk-helper.png",
+                                width: MediaQuery.of(context).size.width / 2,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 15.0)
+                                padding: EdgeInsets.only(top: 25.0)
                               ),
                               Text(
-                                "KK Helper",
+                                "KK Helper\nKota Surabaya",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24.0,
+                                  fontSize: 20.0,
                                 ),
                               ),
                             ],

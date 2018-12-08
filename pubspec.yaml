@@ -36,6 +36,8 @@ dependencies:
   path_provider:
   flutter_local_notifications:
   firebase_messaging:
+  android_alarm_manager:
+  onesignal:
 
 dev_dependencies:
   flutter_test:
@@ -47,7 +49,11 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  fonts:
+     - family: OpenSansCondensed
+       fonts:
+         - asset: fonts/OpenSansCondensed-Light.ttf
+         - asset: fonts/OpenSansCondensed-Bold.ttf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -56,11 +62,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/image/bg-login.png
+   - assets/image/bg-register.png
    - assets/image/gologo.png
    - assets/image/addDoc.png
    - assets/image/edit.png
    - assets/image/person.png
    - assets/image/kk-helper.png
+   - assets/image/kk-helper-color.png
   # - image/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -74,12 +82,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+#   fonts:
+#     - family: SansCond
+#       fonts:
+#         - asset: fonts/OpenSansCondensed-Light.ttf
+#         - asset: fonts/OpenSansCondensed-Bold.ttf
+#           style: bold
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

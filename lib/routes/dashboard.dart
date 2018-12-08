@@ -88,8 +88,6 @@ class _dashboardState extends State<Dashboard>{
                 user.setRole = value["role"];
 
                 new LocalDisk().setString("user", jsonEncode(user.toJsonWithKey()));
-
-                Fluttertoast.showToast(msg: "masukk di email");
               }
             });
           }
@@ -110,6 +108,7 @@ class _dashboardState extends State<Dashboard>{
 
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
   }
+
 
   Future _showNotificationWithDefaultSound() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
@@ -169,9 +168,22 @@ class _dashboardState extends State<Dashboard>{
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 new Container(
+                  child: new Text(
+                      "''KK Helper membantu warga kota surabaya dalam mengurus surat kependudukan''",
+                    style: new TextStyle(
+                      color: Colors.black87,
+                      fontSize: 15.0,
+                      fontFamily: 'OpenSansCondensed'
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(20.0),
+                ),
+                new Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 4.2,
-                  margin: const EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 10.0),
+                  margin: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
                   child: new RaisedButton(
                       elevation: 2.0,
                       onPressed: (){

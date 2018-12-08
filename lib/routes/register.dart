@@ -965,7 +965,7 @@ class _RegisterState extends State<Register> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/image/bg-login.png"),
+                image: new AssetImage("assets/image/bg-register.png"),
                 fit: BoxFit.cover,
               ),
             ),

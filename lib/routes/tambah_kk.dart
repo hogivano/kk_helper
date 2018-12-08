@@ -401,6 +401,75 @@ class _tambahKK extends State<TambahKK>{
     return cek;
   }
 
+  _backConfrim(){
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Apa anda yakin keluar?'),
+        content: new Text('Semua data yang diisi akan hilang'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text(
+              'Tidak',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+              Navigator.of(context).pop(true);
+            },
+            child: new Text(
+              'Ya',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _showConfirmKirim(){
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Yakin untuk mengirim data?'),
+        content: new Text('Pastikan data kamu telah benar dan tidak ada yang salah'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text(
+              'Tidak',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+              setState(() {
+                kirimData = true;
+              });
+              _storeData();
+            },
+            child: new Text(
+              'Ya',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+        ],
+      ),
+    ) ?? false;
+  }
+
   getImagePernyataanDomisili() async{
     var imagePernyataanDomisili = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (imagePernyataanDomisili != null) {
@@ -680,7 +749,9 @@ class _tambahKK extends State<TambahKK>{
             onPressed: (){
               if (_cekInputForm3()){
                 setState(() {
-                  kirimData = true;
+                  setState(() {
+                    _showConfirmKirim();
+                  });
                 });
                 _storeData();
               }
@@ -2753,12 +2824,12 @@ class _tambahKK extends State<TambahKK>{
                 backgroundColorEnd: Color(0xff20b7f7),
                 leading: new IconButton(
                     icon: new Icon(
-                      Icons.menu,
+                      Icons.arrow_back,
                       size: 30.0,
                       color: Colors.white70,
                     ),
                     onPressed: (){
-                      _scaffoldStateKey.currentState.openDrawer();
+                      _backConfrim();
                     }
                 ),
                 title: new Align(
@@ -2774,7 +2845,6 @@ class _tambahKK extends State<TambahKK>{
                   ),
                 ),
               ),
-              drawer: new Ddrawer(firebaseUser: widget.firebaseUser),
               body: new SafeArea(
                   child: new Stack(
                     children: <Widget>[

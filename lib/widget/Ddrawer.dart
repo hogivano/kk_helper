@@ -12,7 +12,9 @@ import 'package:kk_helper/routes/hilang_kk.dart';
 import 'package:kk_helper/routes/perubahan_kk.dart';
 import 'package:kk_helper/routes/kurang_anggota.dart';
 import 'package:kk_helper/routes/tambah_anggota.dart';
+import 'dart:convert';
 import 'package:kk_helper/local_disk.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Ddrawer extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -26,6 +28,9 @@ class Ddrawer extends StatefulWidget {
 
 class _dDrawer extends State<Ddrawer> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Users s = new Users();
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  bool _showUserEdit = false;
 
   Future<void> _logout() async {
     await new LocalDisk().remove("user");
@@ -36,16 +41,75 @@ class _dDrawer extends State<Ddrawer> {
     });
   }
 
+  Widget _buildUserDetail() {
+    return Container(
+      color: Colors.lightBlue,
+      child: ListView(
+        children: [
+          ListTile(
+            title: Text("User details"),
+            leading: Icon(Icons.info_outline),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    new LocalDisk().getString("user").then((str) {
+      if (str == null) {
+        _database
+            .reference()
+            .child("user")
+            .once()
+            .then((DataSnapshot snapshot) {
+          Map<dynamic, dynamic> values = snapshot.value;
+          if (values != null) {
+            values.forEach((key, value) {
+              if (value["noTelp"] == widget.firebaseUser.phoneNumber) {
+                setState(() {
+                  s.setKey = key;
+                  s.setNama = value["nama"];
+                  s.setNoTelp = value["noTelp"];
+                  s.setImage = value["image"];
+                  s.setRole = value["role"];
+                });
+
+                new LocalDisk()
+                    .setString("user", jsonEncode(s.toJsonWithKey()));
+              } else if (value["email"] == widget.firebaseUser.email) {
+                setState(() {
+                  s.setKey = key;
+                  s.setNama = value["nama"];
+                  s.setEmail = value["email"];
+                  s.setImage = value["image"];
+                  s.setRole = value["role"];
+                });
+
+                new LocalDisk()
+                    .setString("user", jsonEncode(s.toJsonWithKey()));
+              }
+            });
+          }
+        });
+      } else {
+        Map userMap = jsonDecode(str);
+        setState(() {
+          this.s = new Users.fromJsonWithKey(userMap);
+        });
+      }
+    }, onError: () {
+      Fluttertoast.showToast(msg: "error pengambilan local disk");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-  print(widget.firebaseUser.photoUrl.toString());
-  print(widget.firebaseUser.phoneNumber.toString());
+    print(widget.firebaseUser.photoUrl.toString());
+    print(widget.firebaseUser.phoneNumber.toString());
     // TODO: implement build
     return new SafeArea(
         child: new Drawer(
@@ -53,18 +117,29 @@ class _dDrawer extends State<Ddrawer> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           new UserAccountsDrawerHeader(
-            accountName: new Text(
-              widget.user != null ? widget.user.nama : "",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20.0),
+            currentAccountPicture: new Container(
+                width: 190.0,
+                height: 190.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: s.image == "" ? AssetImage("assets/image/kk-helper.png") : new NetworkImage(
+                            s.image)))),
+            accountName: new Container(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: new Text(
+                this.s.nama,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18.0
+                ),
+              ),
             ),
             accountEmail: new Text(
-              widget.firebaseUser.email != null
-                  ? widget.firebaseUser.email
-                  : widget.firebaseUser.phoneNumber.toString(),
-              style: new TextStyle(color: Colors.white),
+              s.email != "" ? s.email : s.noTelp,
+              style: new TextStyle(color: Colors.white, fontSize: 15.0),
             ),
             decoration: new BoxDecoration(
               gradient: new LinearGradient(colors: [
@@ -73,7 +148,6 @@ class _dDrawer extends State<Ddrawer> {
                 Color(0xff20b7f7)
               ]),
             ),
-            onDetailsPressed: () {},
           ),
           new SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -98,7 +172,7 @@ class _dDrawer extends State<Ddrawer> {
                       title: new Text("KK Baru"),
                       onTap: () {
                         return Navigator.of(context)
-                            .pushReplacement(new MaterialPageRoute(
+                            .push(new MaterialPageRoute(
                           builder: (context) =>
                               TambahKK(firebaseUser: widget.firebaseUser),
                         ));
@@ -109,9 +183,9 @@ class _dDrawer extends State<Ddrawer> {
                       title: new Text("Tambah Anggota"),
                       onTap: () {
                         return Navigator.of(context)
-                            .pushReplacement(new MaterialPageRoute(
+                            .push(new MaterialPageRoute(
                           builder: (context) =>
-                              TambahAnggota(firebaseUser: widget.firebaseUser),
+                          TambahAnggota(firebaseUser: widget.firebaseUser),
                         ));
                       },
                     ),
@@ -120,7 +194,7 @@ class _dDrawer extends State<Ddrawer> {
                       title: new Text("Kurang Anggota"),
                       onTap: () {
                         return Navigator.of(context)
-                            .pushReplacement(new MaterialPageRoute(
+                            .push(new MaterialPageRoute(
                           builder: (context) =>
                               KurangAnggota(firebaseUser: widget.firebaseUser),
                         ));
@@ -131,7 +205,7 @@ class _dDrawer extends State<Ddrawer> {
                       title: new Text("KK Hilang/Rusak"),
                       onTap: () {
                         return Navigator.of(context)
-                            .pushReplacement(new MaterialPageRoute(
+                            .push(new MaterialPageRoute(
                           builder: (context) =>
                               HilangKK(firebaseUser: widget.firebaseUser),
                         ));

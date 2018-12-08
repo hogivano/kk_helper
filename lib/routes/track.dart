@@ -333,6 +333,82 @@ class _trackState extends State<Track>{
     listTambahKK = [];
     listHilangKK = [];
     listAnggotaKurang = [];
+
+    wgt.add(
+      new Row(
+        children: <Widget>[
+          new Expanded(
+            child: new Container(
+              margin: const EdgeInsets.only(left : 15.0, right: 15.0, bottom: 0.0, top: 15.0),
+              alignment: Alignment.center,
+              height: 40.0,
+              child: new Text(
+                  "KK Baru",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.0
+                ),
+              ),
+              color: Colors.redAccent,
+            ),
+          ),
+          new Expanded(
+            child: new Container(
+              margin: const EdgeInsets.only(left : 15.0, right: 15.0, bottom: 0.0, top: 15.0),
+              alignment: Alignment.center,
+              height: 40.0,
+              child: new Text(
+                "KK Hilang/Rusak",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                  fontSize: 12.0
+                ),
+              ),
+              color: Colors.amberAccent,
+            ),
+          )
+        ],
+      )
+    );
+
+    wgt.add(
+        new Row(
+          children: <Widget>[
+            new Expanded(
+              child: new Container(
+                margin: const EdgeInsets.all(15.0),
+                alignment: Alignment.center,
+                height: 40.0,
+                child: new Text(
+                  "Tambah Anggota",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.0
+                  ),
+                ),
+                color: Colors.greenAccent,
+              ),
+            ),
+            new Expanded(
+              child: new Container(
+                margin: const EdgeInsets.all(15.0),
+                alignment: Alignment.center,
+                height: 40.0,
+                child: new Text(
+                  "Hapus Anggota",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.0
+                  ),
+                ),
+                color: Colors.deepOrangeAccent,
+              ),
+            )
+          ],
+        )
+    );
     Map<dynamic, dynamic> values = snapshot.value;
     values.forEach((key, value){
       if (key != "user"){
@@ -627,65 +703,153 @@ class _trackState extends State<Track>{
                                 ),
                                 new Container(
                                   height: 50.0,
+                                  width: MediaQuery.of(context).size.width,
                                   color: new Color(0xfff7f7f7),
                                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                  child: new Row(
+                                  child: new Stack(
                                     children: <Widget>[
-                                      new Flexible(
-                                        child: new Container(
-                                          child: new Text(
-                                            "ket : " + valList["rejectKeterangan"],
-                                            style: new TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 12.0
-                                            ),
+                                      new Container(
+                                        child: new Text(
+                                          "ket : " + valList["rejectKeterangan"],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: new TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 12.0
                                           ),
-                                          width: MediaQuery.of(context).size.width,
                                         ),
-                                        fit: FlexFit.loose,
+                                        alignment: Alignment.centerLeft,
+                                        width: MediaQuery.of(context).size.width/2.1,
                                       ),
-                                      new Flexible(
-                                          fit: FlexFit.loose,
-                                          child: new Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: <Widget>[
-                                              new Expanded(
-                                                child: new FlatButton(
-                                                  onPressed: (){
-                                                    _infoTap(keyList);
-                                                  },
-                                                  child: new Icon(
-                                                    Icons.info,
-                                                    color: Colors.black38,
-                                                  ),
+                                      new Container(
+                                        width:  MediaQuery.of(context).size.width,
+                                        alignment: Alignment.centerRight,
+                                        child: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Container(
+                                              child: new IconButton(
+                                                onPressed: (){
+                                                  _infoTap(keyList);
+                                                },
+                                                icon: new Icon(
+                                                  Icons.info,
+                                                  color: Colors.black38,
                                                 ),
                                               ),
-                                              new Expanded(
-                                                child: new FlatButton(
-                                                    onPressed: () {},
-                                                    child: new Icon(
-                                                      Icons.edit,
-                                                      color: Color(0xff0ba5c4),
-                                                    )
+                                              width: 20.0,
+                                              height: 50.0,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                            ),
+                                            valList["reject"] != "" ? new Container(
+                                              child: new IconButton(
+                                                onPressed: (){
+                                                  _infoTap(keyList);
+                                                },
+                                                icon: new Icon(
+                                                  Icons.mode_edit,
+                                                  color: Color(0xff0ba5c4),
                                                 ),
                                               ),
-                                              new Expanded(
-                                                  child: new FlatButton(
-                                                      onPressed: () {
-                                                        _dialogConfirm(keyList, key);
-                                                      },
-                                                      child: new Icon(
-                                                        Icons.delete,
-                                                        color: Color(0xffb7190b),
-                                                      )
-                                                  )
+                                              width: 20.0,
+                                              height: 50.0,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                            ) : new Visibility(child: new Text("asas"), visible: false),
+                                            new Container(
+                                              child: new IconButton(
+                                                onPressed: (){
+                                                  _dialogConfirm(keyList, key);
+                                                },
+                                                icon: new Icon(
+                                                  Icons.delete,
+                                                  color: Colors.redAccent,
+                                                ),
                                               ),
-                                            ],
-                                          )
+                                              width: 20.0,
+                                              height: 50.0,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                            ),
+//                                            new IconButton(
+//                                              onPressed: (){
+//                                                _infoTap(keyList);
+//                                              },
+//                                              icon: new Icon(
+//                                                Icons.info,
+//                                                color: Colors.black38,
+//                                              ),
+//                                            ),
+//                                            new Flexible(
+//                                              child: new IconButton(
+//                                                onPressed: (){
+//                                                  _infoTap(keyList);
+//                                                },
+//                                                icon: new Icon(
+//                                                  Icons.info,
+//                                                  color: Colors.black38,
+//                                                ),
+//                                              ),
+//                                              fit: FlexFit.tight,
+//                                            ),
+//                                            new Flexible(
+//                                              child: new FlatButton(
+//                                                onPressed: (){
+//                                                  _infoTap(keyList);
+//                                                },
+//                                                child: new Icon(
+//                                                  Icons.info,
+//                                                  color: Colors.black38,
+//                                                ),
+//                                              ),
+//                                              fit: FlexFit.loose,
+//                                            ),
+//                                            new Flexible(
+//                                                fit: FlexFit.loose,
+//                                                child: new Row(
+//                                                  mainAxisAlignment: MainAxisAlignment.end,
+//                                                  mainAxisSize: MainAxisSize.max,
+//                                                  children: <Widget>[
+//                                                    new Expanded(
+//                                                      child: new FlatButton(
+//                                                        onPressed: (){
+//                                                          _infoTap(keyList);
+//                                                        },
+//                                                        child: new Icon(
+//                                                          Icons.info,
+//                                                          color: Colors.black38,
+//                                                        ),
+//                                                      ),
+//                                                    ),
+//                                                    valList["reject"] != "" ? new Expanded(
+//                                                      child: new FlatButton(
+//                                                          onPressed: () {},
+//                                                          child: new Icon(
+//                                                            Icons.edit,
+//                                                            color: Color(0xff0ba5c4),
+//                                                          )
+//                                                      ),
+//                                                    ) : new Visibility(child: new Text("aa"), visible: false),
+//                                                    new Expanded(
+//                                                        child: new FlatButton(
+//                                                            onPressed: () {
+//                                                              _dialogConfirm(keyList, key);
+//                                                            },
+//                                                            child: new Icon(
+//                                                              Icons.delete,
+//                                                              color: Color(0xffb7190b),
+//                                                            )
+//                                                        )
+//                                                    ),
+//                                                  ],
+//                                                )
+//                                            )
+                                          ],
+                                        ),
                                       )
                                     ],
-                                  ),
+                                  )
                                 )
                               ],
                             ),
@@ -770,7 +934,7 @@ class _trackState extends State<Track>{
     _database.reference().onChildChanged.listen((event){
       Map<dynamic, dynamic> values = event.snapshot.value;
       values.forEach((key, value){
-        print("keyekk changed " + " " + key);
+        print("keyekk asas " + " " + key);
       });
     });
 
@@ -796,12 +960,12 @@ class _trackState extends State<Track>{
           backgroundColorEnd: Color(0xff20b7f7),
           leading: new IconButton(
               icon: new Icon(
-                Icons.menu,
+                Icons.arrow_back,
                 size: 30.0,
                 color: Colors.white70,
               ),
               onPressed: (){
-                _scaffoldStateKey.currentState.openDrawer();
+                Navigator.of(context).pop();
               }
           ),
           title: new Align(
@@ -817,7 +981,6 @@ class _trackState extends State<Track>{
             ),
           ),
         ),
-        drawer: new Ddrawer(firebaseUser: widget.firebaseUser),
         body: new SafeArea(
             child: new SingleChildScrollView(
               scrollDirection: Axis.vertical,

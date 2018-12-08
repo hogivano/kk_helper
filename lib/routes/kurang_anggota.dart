@@ -244,6 +244,38 @@ class _kurangAnggotaState extends State<KurangAnggota>{
       });
     }
   }
+  _backConfrim(){
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Apa anda yakin keluar?'),
+        content: new Text('Semua data yang diisi akan hilang'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text(
+              'Tidak',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+              Navigator.of(context).pop(true);
+            },
+            child: new Text(
+              'Ya',
+              style: TextStyle(
+                  color: Color(0xff6ba3ff)
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   _showConfirmKirim(){
     return showDialog(
@@ -1902,12 +1934,12 @@ class _kurangAnggotaState extends State<KurangAnggota>{
                 backgroundColorEnd: Color(0xff20b7f7),
                 leading: new IconButton(
                     icon: new Icon(
-                      Icons.menu,
+                      Icons.arrow_back,
                       size: 30.0,
                       color: Colors.white70,
                     ),
                     onPressed: (){
-                      _scaffoldStateKey.currentState.openDrawer();
+                      _backConfrim();
                     }
                 ),
                 title: new Align(
@@ -1923,7 +1955,6 @@ class _kurangAnggotaState extends State<KurangAnggota>{
                   ),
                 ),
               ),
-              drawer: new Ddrawer(firebaseUser: widget.firebaseUser),
               body: new SafeArea(
                   child: new Stack(
                     children: <Widget>[

@@ -796,7 +796,8 @@ class _LoginState extends State<Login> {
               "LOGIN",
               style: new TextStyle(
                 fontSize: 25.0,
-                foreground: Paint()..shader = new LinearGradientCustom(<Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)]).getGradient(),
+                color: Colors.white,
+//                foreground: Paint()..shader = linearGradient,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -887,4 +888,8 @@ class _LoginState extends State<Login> {
       )),
     );
   }
+
+  final Shader linearGradient = LinearGradient(
+  colors: <Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 }

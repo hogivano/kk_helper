@@ -149,7 +149,7 @@ class _dashboardState extends State<Dashboard>{
           title: new Align(
             alignment: Alignment(-0.15, 0),
             child: new Text (
-              "KK Helper",
+              "KK Helper Surabaya",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,

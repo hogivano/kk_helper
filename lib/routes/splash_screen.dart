@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 padding: EdgeInsets.only(top: 25.0)
                               ),
                               Text(
-                                "KK Helper\nKota Surabaya",
+                                "KK Helper Surabaya",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,

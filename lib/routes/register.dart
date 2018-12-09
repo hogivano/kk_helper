@@ -970,11 +970,6 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-          new Scaffold(
-            key: _scaffoldKey,
-            backgroundColor: Colors.transparent,
-            body: _switchWidget(),
-          ),
           new Container(
             alignment: Alignment(0.75, -0.5),
             child: new Text(
@@ -986,6 +981,12 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
+
+              new Scaffold(
+              key: _scaffoldKey,
+  backgroundColor: Colors.transparent,
+  body: _switchWidget(),
+  ),
           new Container(
             alignment: Alignment(0.0, 0.45),
             child: new RaisedButton(
@@ -1006,14 +1007,6 @@ class _RegisterState extends State<Register> {
                     decoration: TextDecoration.none),
               ),
             ),
-          ),
-          new Container(
-            alignment: Alignment(0.0, 0.9),
-            child: _onSubmit
-                ? const CircularProgressIndicator(
-                    strokeWidth: 3.0,
-                  )
-                : null,
           ),
           new Container(
               alignment: Alignment(0.0, 0.53),
@@ -1067,7 +1060,21 @@ class _RegisterState extends State<Register> {
                     children: _buildBtnAlternativeRegister(), //btnNavigation
                   ),
                 ],
-              ))
+              )),
+          new Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: _onSubmit
+                ? new SizedBox(
+                    child: new CircularProgressIndicator(
+                      strokeWidth: 3.0,
+                    ),
+                    height: 50.0,
+                    width: 50.0,
+                  )
+                : new Visibility(child: new Text("visible"), visible: false),
+          ),
         ],
       )),
     );

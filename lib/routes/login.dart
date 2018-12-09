@@ -780,15 +780,10 @@ class _LoginState extends State<Login> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/image/bg-login.png"),
+                image: new AssetImage("assets/image/bg-login-baru.png"),
                 fit: BoxFit.cover,
               ),
             ),
-          ),
-          new Scaffold(
-            key: _scaffoldKey,
-            backgroundColor: Colors.transparent,
-            body: _switchWidget(),
           ),
           new Container(
             alignment: Alignment(0.75, -0.5),
@@ -801,6 +796,11 @@ class _LoginState extends State<Login> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          new Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: Colors.transparent,
+            body: _switchWidget(),
           ),
           new Container(
             alignment: Alignment(0.0, 0.45),
@@ -822,14 +822,6 @@ class _LoginState extends State<Login> {
                     decoration: TextDecoration.none),
               ),
             ),
-          ),
-          new Container(
-            alignment: Alignment(0.0, 0.9),
-            child: _onSubmit
-                ? const CircularProgressIndicator(
-                    strokeWidth: 3.0,
-                  )
-                : null,
           ),
           new Container(
               alignment: Alignment(0.0, 0.53),
@@ -855,7 +847,12 @@ class _LoginState extends State<Login> {
                       style: new TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.normal,
-                        foreground: Paint()..shader = new LinearGradientCustom(<Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)]).getGradient(),
+                        foreground: Paint()
+                          ..shader = new LinearGradientCustom(<Color>[
+                            Color(0xff66dbff),
+                            Color(0xff3ab9e0),
+                            Color(0xff168baf)
+                          ]).getGradient(),
                       ),
                     ),
                   ],
@@ -883,13 +880,27 @@ class _LoginState extends State<Login> {
                     children: _buildBtnAlternativeLogin(), //btnNavigation
                   ),
                 ],
-              ))
+              )),
+          new Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: _onSubmit
+                ? new SizedBox(
+                    child: new CircularProgressIndicator(
+                      strokeWidth: 3.0,
+                    ),
+                    height: 50.0,
+                    width: 50.0,
+                  )
+                : new Visibility(child: new Text("visible"), visible: false),
+          ),
         ],
       )),
     );
   }
 
   final Shader linearGradient = LinearGradient(
-  colors: <Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)],
+    colors: <Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 }

@@ -374,7 +374,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
         title: new Text('Kartu Keluarga'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('kartu keluarga yang hendak dikurangi anggotanya'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -398,7 +398,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
         title: new Text('Surat Pengantar RT/RW'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('surat pengantar yang berisikan perubahan kk yang ditandatangani RT/RW dan sudah distempel'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -422,7 +422,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
         title: new Text('Surat Keterangan Pindah'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('khusus anggota keluarga yang dikurangi pindah KK dan masih wilayah NKRI'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -446,7 +446,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
         title: new Text('Surat Kematian'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('khusus anggota keluarga yang dikurangi sudah meninggal'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -1966,7 +1966,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
                             new Container (
                               child: new Text(
                                 posForm == 0 ?  "Data KK" : posForm == 1 ? "Hanya Anggota Dari KK" : posForm == 2 ? "Pengurangan Anggota"
-                                  : "UPLOAD KELENGKAPAN"
+                                  : "UPLOAD PERSYARATAN"
                                 ,textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black54,

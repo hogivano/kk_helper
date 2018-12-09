@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:kk_helper/model/users.dart';
 import 'package:kk_helper/local_disk.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kk_helper/widget/Ddrawer.dart';
 
 class AlurHapusAnggota extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -106,9 +105,6 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
               ),
             ),
           ),
-          drawer: this.user.noTelp != "" || this.user.email != ""
-              ? new Ddrawer(firebaseUser: widget.firebaseUser)
-              : new Ddrawer(firebaseUser: widget.firebaseUser),
           body: new SafeArea(
             child: new SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -164,8 +160,7 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Kartu Keluarga yang hendak dikurangi anggota keluarganya",
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -199,8 +194,7 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Surat Pengantar Perubahan KK dari RT/RW dan sudah distempel",
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -234,8 +228,41 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Surat Keterangan Kematian (jika anggota keluarga meninggal)",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "4",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Keterangan Pindah (jika anggota keluarga pindah KK dan masih dalam wilayah NKRI)",
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -292,9 +319,7 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Meminta surat pengantar perubahan kk ke RT & RW (telah distempel oleh RW)",
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -328,8 +353,7 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Menyiapkan semua persyaratan berkas dan dijadikan dalam bentuk gambar (jpg/png)",
                             textAlign: TextAlign.justify,
                           ),
                         ),
@@ -363,9 +387,251 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                          child: new Text("Klik menu kurang anggota pada navigasi aplikasi sebelah kiri untuk permohonan "
+                              + "pengurangan anggota",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "4",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Mengisi data kk ditempat yang telah disediakan dengan baik dan benar",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "5",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Mengisi biodata seluruh anggota yang ada di KK ditempat "
+                              + "yang telah disediakan dengan baik dan benar",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "6",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Mengisi biodata anggota yang hendak dikurangi serta alasan pengurangan ditempat "
+                              + "yang telah disediakan dengan baik dan benar",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "7",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Upload seluruh berkas ke tempat yang telah disediakan",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "8",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Seluruh isian yang telah dikirim tidak bisa dirubah hanya bisa dibatalkan saja",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "9",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Tunggu selama maksimal 7 hari untuk diacc oleh kelurahan dan kecamatan dan akan "
+                              + "mendapatkan notifikasi di aplikasi bahwa kk sudah jadi",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    margin: const EdgeInsets.only(bottom: 15.0),
+                    padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "10",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Setelah mendapatkan pesan disetujui silahkan datang ke kantor kecamatan yang dituju dengan membawa seluruh persyaratan "
+                              + " berkas untuk mengambil Kartu Keluarga Baru",
                             textAlign: TextAlign.justify,
                           ),
                         ),

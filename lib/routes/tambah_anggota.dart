@@ -392,11 +392,11 @@ class _TambahAnggotaState extends State<TambahAnggota> {
     return showDialog(
           context: context,
           builder: (context) => new AlertDialog(
-                title: new Text('Kartu Keluarga'),
+                title: new Text('Kartu Keluarga ditumpangi'),
                 content: new SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: new Text(
-                      'aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+                      'kartu keluarga yang hendak ditambahkan anggota baru'),
                 ),
                 actions: <Widget>[
                   new FlatButton(
@@ -420,7 +420,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                 content: new SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: new Text(
-                      'aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+                      'surat pengantar yang berisikan penambahan jiwa yang ditandatangani RT/RW dan sudah distempel'),
                 ),
                 actions: <Widget>[
                   new FlatButton(
@@ -440,11 +440,11 @@ class _TambahAnggotaState extends State<TambahAnggota> {
     return showDialog(
           context: context,
           builder: (context) => new AlertDialog(
-                title: new Text('Surat Keterangan Pindah'),
+                title: new Text('Kartu Keluarga Lama'),
                 content: new SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: new Text(
-                      'aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+                      'khusus anggota keluarga yang hendak ditambahkan sebelumnya sudah memiliki kartu keluarga'),
                 ),
                 actions: <Widget>[
                   new FlatButton(
@@ -464,11 +464,11 @@ class _TambahAnggotaState extends State<TambahAnggota> {
     return showDialog(
           context: context,
           builder: (context) => new AlertDialog(
-                title: new Text('Surat AktaKelahiran'),
+                title: new Text('Akta Kelahiran'),
                 content: new SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: new Text(
-                      'aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+                      'khusus bagi anggota keluarga yang hendak ditambahkan baru lahir'),
                 ),
                 actions: <Widget>[
                   new FlatButton(
@@ -481,6 +481,30 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                 ],
               ),
         ) ??
+        false;
+  }
+
+  Future<bool> _showHelpSuratKawin() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Surat Kawin'),
+        content: new SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: new Text(
+              'khusus bagi anggota keluarga yang hendak ditambahkan sudah menikah'),
+        ),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text(
+              'Tutup',
+              style: TextStyle(color: Color(0xff6ba3ff)),
+            ),
+          ),
+        ],
+      ),
+    ) ??
         false;
   }
 
@@ -1725,7 +1749,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                       Icons.help,
                       size: 15.0,
                     ),
-                    onPressed: _showHelpAktaKelahiran
+                    onPressed: _showHelpSuratKawin
                 ),
               ],
             ),
@@ -1910,7 +1934,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                                 ? "Data KK"
                                 : posForm == 1
                                     ? "Penambahan Anggota"
-                                    : "UPLOAD KELENGKAPAN",
+                                    : "UPLOAD PERSYARATAN",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black54,

@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:kk_helper/model/users.dart';
 import 'package:kk_helper/local_disk.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kk_helper/widget/Ddrawer.dart';
 
 class AlurKKBaru extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -106,9 +105,6 @@ class _alurKKBaruState extends State<AlurKKBaru> {
           ),
         ),
       ),
-      drawer: this.user.noTelp != "" || this.user.email != ""
-          ? new Ddrawer(firebaseUser: widget.firebaseUser)
-          : new Ddrawer(firebaseUser: widget.firebaseUser),
       body: new SafeArea(
         child: new SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -575,6 +571,7 @@ class _alurKKBaruState extends State<AlurKKBaru> {
                 ),
               ),
               new Container(
+                margin: const EdgeInsets.only(bottom: 15.0),
                 padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                 child: new Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -601,11 +598,10 @@ class _alurKKBaruState extends State<AlurKKBaru> {
                     ),
                     new Container(
                       width: MediaQuery.of(context).size.width*0.7,
-                      child: new Text("Silahkan datang ke kantor kecamatan yang dituju dengan membawa seluruh persyaratan "
-                          + " berkas untuk mengambail Kartu Keluarga Baru",
+                      child: new Text("Setelah mendapatkan pesan disetujui silahkan datang ke kantor kecamatan yang dituju dengan membawa seluruh persyaratan "
+                          + " berkas untuk mengambil Kartu Keluarga Baru",
                         textAlign: TextAlign.justify,
                       ),
-                      padding: const EdgeInsets.only(bottom: 20.0),
                     ),
                   ],
                 ),

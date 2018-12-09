@@ -2230,7 +2230,7 @@ class _hilangKKState extends State<HilangKK>{
               new Row(
                 children: <Widget>[
                   new Text(
-                    "KTP Kepala/Anggota",
+                    "KTP Kepala Keluarga",
                     textAlign: TextAlign.left,
                     style: new TextStyle(
                         color: Colors.black,
@@ -2461,7 +2461,7 @@ class _hilangKKState extends State<HilangKK>{
         title: new Text('Kartu Keluarga'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('jika ada fotocopy/simpanannya'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2485,7 +2485,7 @@ class _hilangKKState extends State<HilangKK>{
         title: new Text('KTP'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('kartu tanda penduduk kepala keluarga sebagai bukti bahwa sebagai kepala keluarga di kk yang hilang/rusak'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2509,7 +2509,7 @@ class _hilangKKState extends State<HilangKK>{
         title: new Text('Surat Kehilangan Polisi'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('pengajuan surat keterangan kk hilang ke polisi'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2530,10 +2530,10 @@ class _hilangKKState extends State<HilangKK>{
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
-        title: new Text('Pengantar Surat Hilang/Rusak'),
+        title: new Text('Pengantar RT/RW'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('surat pengantar yang isinya pembuatan kk baru karena hilang/rusak'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2698,7 +2698,7 @@ class _hilangKKState extends State<HilangKK>{
                           children: <Widget>[
                             new Container (
                               child: new Text(
-                                posForm == 0 ?  "Data KK" : posForm == 1 ? "DATA KELUARGA" : "UPLOAD KELENGKAPAN"
+                                posForm == 0 ?  "Data KK" : posForm == 1 ? "DATA KELUARGA" : "UPLOAD PERSYARATAN"
                                 ,textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black54,

@@ -96,7 +96,7 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
             title: new Align(
               alignment: Alignment(-0.15, 0),
               child: new Text(
-                "Alur Hapus Anggota",
+                "Alur Kurang Anggota",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,

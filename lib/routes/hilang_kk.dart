@@ -407,17 +407,19 @@ class _hilangKKState extends State<HilangKK>{
       kondisiKirim = "Upload Gambar...";
     });
 
-    final StorageReference firebaseRefKK = FirebaseStorage.instance.ref().child("kkHilang_kk_" + rand);
-    await firebaseRefKK.putFile(_imageKK).onComplete.then((kk) {
-      kk.ref.getDownloadURL().then((url){
-        this._urlKK = url.toString();
+    if (_imageKK != null){
+      final StorageReference firebaseRefKK = FirebaseStorage.instance.ref().child("kkHilang_kk_" + rand);
+      await firebaseRefKK.putFile(_imageKK).onComplete.then((kk) {
+        kk.ref.getDownloadURL().then((url){
+          this._urlKK = url.toString();
+        });
+      }, onError: (err){
+        setState(() {
+          kirimData = false;
+        });
+        Fluttertoast.showToast(msg: "maaf terjadi kesalahan upload");
       });
-    }, onError: (err){
-      setState(() {
-        kirimData = false;
-      });
-      Fluttertoast.showToast(msg: "maaf terjadi kesalahan upload");
-    });
+    }
 
     final StorageReference firebaseRefKtp = FirebaseStorage.instance.ref().child("kkHilang_ktp_" + rand);
     await firebaseRefKtp.putFile(_imageKtp).onComplete.then((ktp) {
@@ -431,17 +433,19 @@ class _hilangKKState extends State<HilangKK>{
       Fluttertoast.showToast(msg: "maaf terjadi kesalahan upload");
     });
 
-    final StorageReference firebaseRefKehilangan = FirebaseStorage.instance.ref().child("kkHilang_kehilangan_" + rand);
-    await firebaseRefKehilangan.putFile(_imageKehilanganPolisi).onComplete.then((kehilangan) {
-      kehilangan.ref.getDownloadURL().then((url){
-        this._urlKehilanganPolisi = url.toString();
+    if (_imageKehilanganPolisi != null){
+      final StorageReference firebaseRefKehilangan = FirebaseStorage.instance.ref().child("kkHilang_kehilangan_" + rand);
+      await firebaseRefKehilangan.putFile(_imageKehilanganPolisi).onComplete.then((kehilangan) {
+        kehilangan.ref.getDownloadURL().then((url){
+          this._urlKehilanganPolisi = url.toString();
+        });
+      }, onError: (err){
+        setState(() {
+          kirimData = false;
+        });
+        Fluttertoast.showToast(msg: "maaf terjadi kesalahan upload");
       });
-    }, onError: (err){
-      setState(() {
-        kirimData = false;
-      });
-      Fluttertoast.showToast(msg: "maaf terjadi kesalahan upload");
-    });
+    }
 
     final StorageReference firebaseRefPengantar = FirebaseStorage.instance.ref().child("kkHilang_pengantar_" + rand);
     await firebaseRefPengantar.putFile(_imagePengantarRtRw).onComplete.then((pengantar) {
@@ -656,9 +660,8 @@ class _hilangKKState extends State<HilangKK>{
             onPressed: (){
               if (_cekInputForm3()){
                 setState(() {
-                  kirimData = true;
+                  _showConfirmKirim();
                 });
-                _storeData();
               }
             },
             color: Color(0xff41f4a0),

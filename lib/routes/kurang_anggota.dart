@@ -1965,7 +1965,7 @@ class _kurangAnggotaState extends State<KurangAnggota>{
                           children: <Widget>[
                             new Container (
                               child: new Text(
-                                posForm == 0 ?  "Data KK" : posForm == 1 ? "Semua Anggota" : posForm == 2 ? "Pengurangan Anggota"
+                                posForm == 0 ?  "Data KK" : posForm == 1 ? "Hanya Anggota Dari KK" : posForm == 2 ? "Pengurangan Anggota"
                                   : "UPLOAD KELENGKAPAN"
                                 ,textAlign: TextAlign.center,
                                 style: TextStyle(

@@ -1,9 +1,9 @@
-class AnggotaTambah{
+class AnggotaTambah2{
   String _nama;
   String _nik;
   String _alasanKurang;
 
-  AnggotaTambah(){
+  AnggotaTambah2(){
     this._nama = "";
     this._nik = "";
     this._alasanKurang = "";
@@ -17,7 +17,7 @@ class AnggotaTambah{
   set setNik(String nik) => this._nik = nik;
   set setAlasanKurang(String alasan) => this._alasanKurang = alasan;
 
-  AnggotaTambah.fromJson(Map<String, dynamic> json){
+  AnggotaTambah2.fromJson(Map<String, dynamic> json){
     _nama = json["nama"];
     _nik = json["nik"];
     _alasanKurang = json["alasanKurang"];

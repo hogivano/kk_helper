@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:kk_helper/model/data_anggota_tambah.dart';
 import 'package:kk_helper/widget/Ddrawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,6 +16,11 @@ import 'package:flutter/services.dart';
 import 'package:kk_helper/model/data_hilang_kk.dart';
 import 'package:kk_helper/model/data_anggota_kurang.dart';
 import 'package:kk_helper/model/anggota_kurang.dart';
+import 'package:kk_helper/model/anggota_tambah.dart';
+import 'package:kk_helper/routes/detail_kurang_anggota.dart';
+import 'package:kk_helper/routes/detail_tambah_anggota.dart';
+import 'package:kk_helper/routes/detail_kk_baru.dart';
+import 'package:kk_helper/routes/detail_kk_hilang.dart';
 
 class Track extends StatefulWidget {
   final FirebaseUser firebaseUser;
@@ -32,6 +38,8 @@ class _trackState extends State<Track>{
   List<DataTambahKK> listTambahKK = [];
   List<DataHilangKK> listHilangKK = [];
   List<DataAnggotaKurang> listAnggotaKurang = [];
+  List<DataAnggotaTambah2> listAnggotaTambah = [];
+
 
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
@@ -95,8 +103,80 @@ class _trackState extends State<Track>{
     ) ?? false;
   }
 
-  _infoTap (String ind){
-    print(ind);
+  _infoTap (String key, String parent){
+    if (parent == "kurang_anggota"){
+      DataAnggotaKurang data = _searchByKeyAnggotaKurang(key);
+      Navigator.of(context).push(new PageRouteBuilder(
+          opaque: true,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (BuildContext context, _, __) {
+            return new DetailKurangAnggota(data: data);
+          },
+          transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+            return new SlideTransition(
+              child: child,
+              position: new Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+            );
+          }
+      ));
+    } else if (parent == "tambah_anggota"){
+      DataAnggotaTambah2 data = _searchByKeyAnggotaTambah(key);
+      Navigator.of(context).push(new PageRouteBuilder(
+          opaque: true,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (BuildContext context, _, __) {
+            return new DetailTambahAnggota(data: data);
+          },
+          transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+            return new SlideTransition(
+              child: child,
+              position: new Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+            );
+          }
+      ));
+    } else if (parent == "hilang_kk"){
+      DataHilangKK data = _searchByKeyHilangKK(key);
+      Navigator.of(context).push(new PageRouteBuilder(
+          opaque: true,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (BuildContext context, _, __) {
+            return new DetailKKHilang(data: data);
+          },
+          transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+            return new SlideTransition(
+              child: child,
+              position: new Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+            );
+          }
+      ));
+    } else if (parent == "tambah_kk"){
+      DataTambahKK data = _searchByKeyTambahKK(key);
+      Navigator.of(context).push(new PageRouteBuilder(
+          opaque: true,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (BuildContext context, _, __) {
+            return new DetailKKBaru(data: data);
+          },
+          transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+            return new SlideTransition(
+              child: child,
+              position: new Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+            );
+          }
+      ));
+    }
 //    Fluttertoast.showToast(msg: "index info : " + index.toString());
   }
 
@@ -267,7 +347,73 @@ class _trackState extends State<Track>{
         Fluttertoast.showToast(msg: "gagal menghapus");
       });
     } else if (parent == "tambah_anggota"){
+      DataAnggotaTambah2 del = _searchByKeyAnggotaTambah(key);
+      setState(() {
+        load = true;
+      });
+      if (del.kk != ""){
+        String kk = _replaceLinkFirebaseStorage(del.kk);
+        int tanya = kk.indexOf("?");
+        kk = kk.substring(0, tanya);
 
+        _delImage(kk);
+      }
+
+      if (del.pengantar != ""){
+        String pengantar = _replaceLinkFirebaseStorage(del.pengantar);
+        int tanya = pengantar.indexOf("?");
+        pengantar = pengantar.substring(0, tanya);
+
+        _delImage(pengantar);
+      }
+
+      try {
+        for(int i = 0; i < del.kkLama.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.kkLama[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      try {
+        for(int i = 0; i < del.aktaKelahiran.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.aktaKelahiran[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      try {
+        for(int i = 0; i < del.kawin.length; i++){
+          String ket = _replaceLinkFirebaseStorage(del.kawin[i]);
+          int index = ket.indexOf("?");
+          ket = ket.substring(0, index);
+
+          await _delImage(ket);
+        }
+      } on NoSuchMethodError {
+        print("null object");
+      }
+
+      await _database.reference().child("tambah_anggota").child(key).remove().whenComplete((){
+        Fluttertoast.showToast(msg: "berhasil menghapus");
+        setState(() {
+          load = false;
+        });
+      }).catchError((err){
+        setState(() {
+          load = false;
+        });
+        Fluttertoast.showToast(msg: "gagal menghapus");
+      });
     }
   }
 
@@ -326,6 +472,17 @@ class _trackState extends State<Track>{
     return data;
   }
 
+  DataAnggotaTambah2 _searchByKeyAnggotaTambah(String key){
+    DataAnggotaTambah2 data = new DataAnggotaTambah2();
+    for(int i = 0; i < listAnggotaTambah.length; i++){
+      if (listAnggotaTambah[i].key == key){
+        data = listAnggotaTambah[i];
+        break;
+      }
+    }
+    return data;
+  }
+
   List<Widget> _getTambahKK(DataSnapshot snapshot){
     List<Widget> wgt = [];
     int index = 0;
@@ -333,6 +490,7 @@ class _trackState extends State<Track>{
     listTambahKK = [];
     listHilangKK = [];
     listAnggotaKurang = [];
+    listAnggotaTambah = [];
 
     wgt.add(
       new Row(
@@ -349,7 +507,7 @@ class _trackState extends State<Track>{
                     fontSize: 12.0
                 ),
               ),
-              color: Colors.redAccent,
+              color: Color(0xb32870d6),
             ),
           ),
           new Expanded(
@@ -365,7 +523,7 @@ class _trackState extends State<Track>{
                   fontSize: 12.0
                 ),
               ),
-              color: Colors.amberAccent,
+              color: Color(0xb307962b),
             ),
           )
         ],
@@ -387,7 +545,7 @@ class _trackState extends State<Track>{
                       fontSize: 12.0
                   ),
                 ),
-                color: Colors.greenAccent,
+                color: Color(0xb37554d8),
               ),
             ),
             new Expanded(
@@ -396,14 +554,14 @@ class _trackState extends State<Track>{
                 alignment: Alignment.center,
                 height: 40.0,
                 child: new Text(
-                  "Hapus Anggota",
+                  "Kurang Anggota",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 12.0
                   ),
                 ),
-                color: Colors.deepOrangeAccent,
+                color: Color(0xb3d16f29),
               ),
             )
           ],
@@ -579,6 +737,60 @@ class _trackState extends State<Track>{
                 });
 
                 listAnggotaKurang.add(dak);
+              } else if (key == "tambah_anggota"){
+                DataAnggotaTambah2 dat = new DataAnggotaTambah2();
+                dat.setKey = keyList;
+                dat.setAccKecamatan = valList["accKecamatan"];
+                dat.setaccKelurahan = valList["accKelurahan"];
+                dat.setAlamat = valList["alamat"];
+                dat.setDate = valList["date"];
+                dat.setIdUser = valList["idUser"];
+                dat.setKecamatan = valList["kecamatan"];
+                dat.setKelurahan = valList["kelurahan"];
+                dat.setKepalaKeluarga = valList["kepalaKeluarga"];
+                dat.setReject = valList["reject"];
+                dat.setRejectKeterangan = valList["rejectKeterangan"];
+                dat.setRt = valList["rt"];
+                dat.setRw = valList["rw"];
+                dat.setNoKK = valList["noKK"];
+
+                String strKurang = jsonEncode(valList["tambahAnggota"]);
+                List<dynamic> mapp = jsonDecode(strKurang);
+
+                List<AnggotaTambah2> listAt = [];
+                mapp.forEach((str){
+                  String jsonStr = jsonEncode(str);
+                  AnggotaTambah2 baru = AnggotaTambah2.fromJson(jsonDecode(jsonStr));
+                  listAt.add(baru);
+                });
+
+                dat.setAnggotaTambah = listAt;
+
+                String strImage = jsonEncode(valList["image"]);
+                Map<dynamic, dynamic> mapImage = jsonDecode(strImage);
+                mapImage.forEach((key, valImage){
+                  if (key == "kk"){
+                    dat.setKK = valImage;
+                  } else if (key == "pengantarRtRw"){
+                    dat.setPengantar = valImage;
+                  } else {
+                    List<String> imgArray = [];
+                    List<dynamic> mapArray = jsonDecode(jsonEncode(valImage));
+                    mapArray.forEach((str){
+                      imgArray.add(str);
+                    });
+
+                    if (key == "KKLama"){
+                      dat.setKKLama = imgArray;
+                    } else if (key == "aktaKelahiran"){
+                      dat.setAktaKelahiran = imgArray;
+                    } else if (key == "kawin"){
+                      dat.setKawin = imgArray;
+                    }
+                  }
+                });
+
+                listAnggotaTambah.add(dat);
               }
               wgt.add(
                 new Container(
@@ -590,9 +802,9 @@ class _trackState extends State<Track>{
                       new Container(
                         width: 10.0,
                         height: 150.0,
-                        color: key == "tambah_kk" ? Colors.redAccent :
-                        key == "hilang_kk" ? Colors.amberAccent :
-                        key == "kurang_anggota" ? Colors.deepOrangeAccent : Colors.greenAccent,
+                        color: key == "tambah_kk" ? Color(0xb32870d6) :
+                        key == "hilang_kk" ? Color(0xb307962b) :
+                        key == "kurang_anggota" ? Color(0xb3d16f29) : Color(0xb37554d8),
                       ),
                       new Expanded(
                           child: new Container(
@@ -730,36 +942,24 @@ class _trackState extends State<Track>{
                                             new Container(
                                               child: new IconButton(
                                                 onPressed: (){
-                                                  _infoTap(keyList);
+                                                  _infoTap(keyList, key);
                                                 },
                                                 icon: new Icon(
                                                   Icons.info,
                                                   color: Colors.black38,
                                                 ),
+                                                alignment: Alignment.center,
                                               ),
-                                              width: 20.0,
+                                              width: 30.0,
                                               height: 50.0,
                                               alignment: Alignment.center,
-                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                             ),
-                                            valList["reject"] != "" ? new Container(
-                                              child: new IconButton(
-                                                onPressed: (){
-                                                  _infoTap(keyList);
-                                                },
-                                                icon: new Icon(
-                                                  Icons.mode_edit,
-                                                  color: Color(0xff0ba5c4),
-                                                ),
-                                              ),
-                                              width: 20.0,
-                                              height: 50.0,
-                                              alignment: Alignment.center,
-                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                                            ) : new Visibility(child: new Text("asas"), visible: false),
                                             new Container(
                                               child: new IconButton(
+                                                alignment: Alignment.center,
                                                 onPressed: (){
+                                                  print("key :" + key);
                                                   _dialogConfirm(keyList, key);
                                                 },
                                                 icon: new Icon(
@@ -767,84 +967,11 @@ class _trackState extends State<Track>{
                                                   color: Colors.redAccent,
                                                 ),
                                               ),
-                                              width: 20.0,
+                                              width: 30.0,
                                               height: 50.0,
                                               alignment: Alignment.center,
-                                              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              margin: const EdgeInsets.symmetric(horizontal: 5.0),
                                             ),
-//                                            new IconButton(
-//                                              onPressed: (){
-//                                                _infoTap(keyList);
-//                                              },
-//                                              icon: new Icon(
-//                                                Icons.info,
-//                                                color: Colors.black38,
-//                                              ),
-//                                            ),
-//                                            new Flexible(
-//                                              child: new IconButton(
-//                                                onPressed: (){
-//                                                  _infoTap(keyList);
-//                                                },
-//                                                icon: new Icon(
-//                                                  Icons.info,
-//                                                  color: Colors.black38,
-//                                                ),
-//                                              ),
-//                                              fit: FlexFit.tight,
-//                                            ),
-//                                            new Flexible(
-//                                              child: new FlatButton(
-//                                                onPressed: (){
-//                                                  _infoTap(keyList);
-//                                                },
-//                                                child: new Icon(
-//                                                  Icons.info,
-//                                                  color: Colors.black38,
-//                                                ),
-//                                              ),
-//                                              fit: FlexFit.loose,
-//                                            ),
-//                                            new Flexible(
-//                                                fit: FlexFit.loose,
-//                                                child: new Row(
-//                                                  mainAxisAlignment: MainAxisAlignment.end,
-//                                                  mainAxisSize: MainAxisSize.max,
-//                                                  children: <Widget>[
-//                                                    new Expanded(
-//                                                      child: new FlatButton(
-//                                                        onPressed: (){
-//                                                          _infoTap(keyList);
-//                                                        },
-//                                                        child: new Icon(
-//                                                          Icons.info,
-//                                                          color: Colors.black38,
-//                                                        ),
-//                                                      ),
-//                                                    ),
-//                                                    valList["reject"] != "" ? new Expanded(
-//                                                      child: new FlatButton(
-//                                                          onPressed: () {},
-//                                                          child: new Icon(
-//                                                            Icons.edit,
-//                                                            color: Color(0xff0ba5c4),
-//                                                          )
-//                                                      ),
-//                                                    ) : new Visibility(child: new Text("aa"), visible: false),
-//                                                    new Expanded(
-//                                                        child: new FlatButton(
-//                                                            onPressed: () {
-//                                                              _dialogConfirm(keyList, key);
-//                                                            },
-//                                                            child: new Icon(
-//                                                              Icons.delete,
-//                                                              color: Color(0xffb7190b),
-//                                                            )
-//                                                        )
-//                                                    ),
-//                                                  ],
-//                                                )
-//                                            )
                                           ],
                                         ),
                                       )

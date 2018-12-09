@@ -169,7 +169,7 @@ class _dashboardState extends State<Dashboard>{
               children: <Widget>[
                 new Container(
                   child: new Text(
-                      "''KK Helper membantu warga kota surabaya dalam mengurus surat kependudukan''",
+                      "''KK Helper membantu warga kota surabaya dalam mengurus surat kependudukan (Khusus WNI)''",
                     style: new TextStyle(
                       color: Colors.black87,
                       fontSize: 15.0,
@@ -187,9 +187,22 @@ class _dashboardState extends State<Dashboard>{
                   child: new RaisedButton(
                       elevation: 2.0,
                       onPressed: (){
-                        Navigator.of(context).push(
-                            new MaterialPageRoute(builder: (context) => AlurKKBaru(firebaseUser : widget.firebaseUser))
-                        );
+                        Navigator.of(context).push(new PageRouteBuilder(
+                            opaque: true,
+                            transitionDuration: const Duration(milliseconds: 500),
+                            pageBuilder: (BuildContext context, _, __) {
+                              return new AlurKKBaru(firebaseUser: widget.firebaseUser);
+                            },
+                            transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                              return new SlideTransition(
+                                child: child,
+                                position: new Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                              );
+                            }
+                        ));
                       },
                       splashColor: Colors.black54,
                       padding: new EdgeInsets.all(0.0),
@@ -240,9 +253,22 @@ class _dashboardState extends State<Dashboard>{
                   child: new RaisedButton(
                       elevation: 2.0,
                       onPressed: () {
-                        Navigator.of(context).push(
-                            new MaterialPageRoute(builder: (context) => AlurTambahAnggota(firebaseUser : widget.firebaseUser))
-                        );
+                        Navigator.of(context).push(new PageRouteBuilder(
+                            opaque: true,
+                            transitionDuration: const Duration(milliseconds: 500),
+                            pageBuilder: (BuildContext context, _, __) {
+                              return new AlurTambahAnggota(firebaseUser: widget.firebaseUser);
+                            },
+                            transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                              return new SlideTransition(
+                                child: child,
+                                position: new Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                              );
+                            }
+                        ));
                       },
                       splashColor: Colors.black54,
                       padding: new EdgeInsets.all(0.0),
@@ -293,9 +319,22 @@ class _dashboardState extends State<Dashboard>{
                   child: new RaisedButton(
                       elevation: 2.0,
                       onPressed: (){
-                        Navigator.of(context).push(
-                            new MaterialPageRoute(builder: (context) => AlurHapusAnggota(firebaseUser : widget.firebaseUser))
-                        );
+                        Navigator.of(context).push(new PageRouteBuilder(
+                            opaque: true,
+                            transitionDuration: const Duration(milliseconds: 500),
+                            pageBuilder: (BuildContext context, _, __) {
+                              return new AlurHapusAnggota(firebaseUser: widget.firebaseUser);
+                            },
+                            transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                              return new SlideTransition(
+                                child: child,
+                                position: new Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                              );
+                            }
+                        ));
                       },
                       splashColor: Colors.black54,
                       padding: new EdgeInsets.all(0.0),
@@ -320,7 +359,7 @@ class _dashboardState extends State<Dashboard>{
                             color: Colors.black12,
                           ), new Container(
                             child: new Text(
-                              "HAPUS\nANGGOTA KELUARGA",
+                              "KURANG\nANGGOTA KELUARGA",
                               style: new TextStyle(
                                   color: Colors.white70,
                                   fontStyle: FontStyle.normal,
@@ -346,9 +385,22 @@ class _dashboardState extends State<Dashboard>{
                   child: new RaisedButton(
                       elevation: 2.0,
                       onPressed: (){
-                        Navigator.of(context).push(
-                            new MaterialPageRoute(builder: (context) => AlurKKHilang(firebaseUser : widget.firebaseUser))
-                        );
+                        Navigator.of(context).push(new PageRouteBuilder(
+                            opaque: true,
+                            transitionDuration: const Duration(milliseconds: 500),
+                            pageBuilder: (BuildContext context, _, __) {
+                              return new AlurKKHilang(firebaseUser: widget.firebaseUser);
+                            },
+                            transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                              return new SlideTransition(
+                                child: child,
+                                position: new Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                              );
+                            }
+                        ));
                       },
                       splashColor: Colors.black54,
                       padding: new EdgeInsets.all(0.0),

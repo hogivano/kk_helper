@@ -23,7 +23,7 @@ class DataAnggotaKurang{
   String _key;
   String _kepalaKeluarga;
 
-  DataTambahKK(){
+  DataAnggotaKurang(){
     this._accKecamatan = false;
     this._accKelurahan = false;
     this._alamat = "";

@@ -227,14 +227,14 @@ class _dashboardState extends State<Dashboard>{
                             color: Colors.black12,
                           ), new Container(
                             child: new Text(
-                                "PEMBUATAN\nKK BARU",
+                                "ALUR PEMBUATAN\nKK BARU",
                               style: new TextStyle(
                                 color: Colors.white70,
                                 fontStyle: FontStyle.normal,
                                 fontSize: 16.0
                               ),
                             ),
-                            alignment: Alignment(0.35, 0),
+                            alignment: Alignment(0.5, 0),
                             color: Colors.black12,
                           ), new Container(
                             child: new Icon(
@@ -293,14 +293,14 @@ class _dashboardState extends State<Dashboard>{
                             color: Colors.black12,
                           ), new Container(
                             child: new Text(
-                              "TAMBAH\nANGGOTA KELUARGA",
+                              "ALUR TAMBAH\nANGGOTA KELUARGA",
                               style: new TextStyle(
                                   color: Colors.white70,
                                   fontStyle: FontStyle.normal,
                                   fontSize: 16.0
                               ),
                             ),
-                            alignment: Alignment(0.8, 0),
+                            alignment: Alignment(0.7, 0),
                             color: Colors.black12,
                           ), new Container(
                             child: new Icon(
@@ -359,7 +359,7 @@ class _dashboardState extends State<Dashboard>{
                             color: Colors.black12,
                           ), new Container(
                             child: new Text(
-                              "KURANG\nANGGOTA KELUARGA",
+                              "ALUR KURANG\nANGGOTA KELUARGA",
                               style: new TextStyle(
                                   color: Colors.white70,
                                   fontStyle: FontStyle.normal,
@@ -425,14 +425,14 @@ class _dashboardState extends State<Dashboard>{
                             color: Colors.black12,
                           ), new Container(
                             child: new Text(
-                              "PENGAJUAN\nKK HILANG/RUSAK",
+                              "ALUR PENGAJUAN\nKK HILANG/RUSAK",
                               style: new TextStyle(
                                   color: Colors.white70,
                                   fontStyle: FontStyle.normal,
                                   fontSize: 16.0
                               ),
                             ),
-                            alignment: Alignment(0.7, 0),
+                            alignment: Alignment(0.5, 0),
                             color: Colors.black12,
                           ), new Container(
                             child: new Icon(

@@ -2718,7 +2718,7 @@ class _tambahKK extends State<TambahKK>{
         title: new Text('Surat Pernyataan Domisili'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('didapat dari RT/RW sebagai bukti alamat tempat tinggal KK banar adanya'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2742,7 +2742,7 @@ class _tambahKK extends State<TambahKK>{
         title: new Text('Akta Kawin atau Cerai'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('dikhusukan bagi yang sudah nikah/cerai sebagai bukti telah berkeluarga'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2766,7 +2766,7 @@ class _tambahKK extends State<TambahKK>{
         title: new Text('Keterangan Pekerjaan'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('sebagai bukti bahwa keluarga memiliki penghasilan'),
         ),
         actions: <Widget>[
           new FlatButton(
@@ -2790,7 +2790,7 @@ class _tambahKK extends State<TambahKK>{
         title: new Text('Keterangan Pindah Datang'),
         content: new SingleChildScrollView (
           scrollDirection: Axis.vertical,
-          child: new Text('aksnkalnsnahifhLFD HAOWI FHOIIOA FSJFASJ AOSJ PASOJ'),
+          child: new Text('dikhususkan bagi anggota keluarga yang pindah tempat ke wilayah NKRI'),
         ),
         actions: <Widget>[
           new FlatButton(

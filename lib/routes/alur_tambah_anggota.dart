@@ -162,12 +162,12 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
-                        new Flexible(
-                          fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("KK Baru"),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Kartu Keluarga yang ditumpangi",
+                            textAlign: TextAlign.justify,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -196,12 +196,12 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
-                        new Flexible(
-                          fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("Surat Pengantar RT/RW"),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Pengantar Penambahan Jiwa dari RT/RW",
+                            textAlign: TextAlign.justify,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -230,12 +230,81 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Akta Kelahiran (Jika anggota keluarga yang hendak ditambahkan baru lahir)",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
                         new Flexible(
                           fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("Surat Pengantar RT/RW"),
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "4",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
-                        )
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Kartu Keluarga Lama (khusus anggota keluarga yang pindah kk)",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Flexible(
+                          fit: FlexFit.loose,
+                          child:  new Container(
+                            child: new CircleAvatar(
+                              child: new Text(
+                                "5",
+                                style: TextStyle(color: Colors.blueAccent),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                            width: 40.0,
+                            height: 40.0,
+                            padding: const EdgeInsets.all(1.0),
+                            decoration: new BoxDecoration(
+                              color: Color(0xff639fff),
+                              shape: BoxShape.circle,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text(
+                            "Akta Kawin (khusus anggota keluarga yang ditambahkan sudah menikah)",
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -289,8 +358,9 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa"),
+                          child: new Text("Meminta surat pengantar penambahan jiwa ke RT & RW (telah distempel oleh RW)",
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                       ],
                     ),
@@ -299,18 +369,10 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                     padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                     child: new Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        new Container(
-                          width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ),
                         new Flexible(
-                          child: new Container(
+                          fit: FlexFit.loose,
+                          child:  new Container(
                             child: new CircleAvatar(
                               child: new Text(
                                 "2",
@@ -326,6 +388,12 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                               shape: BoxShape.circle,
                             ),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Memyiapkan semua persyaratan berkas dan dijadikan dalam bentuk gambar (jpg/png)",
+                            textAlign: TextAlign.justify,
                           ),
                         ),
                       ],
@@ -358,8 +426,10 @@ class _AlurTambahAnggotaState extends State<AlurTambahAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa"),
+                          child: new Text("Klik menu tambah anggota pada navigasi aplikasi sebelah kiri untuk permohonan "
+                              + "penambahan anggota",
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                       ],
                     ),

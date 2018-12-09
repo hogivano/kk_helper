@@ -162,12 +162,13 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
-                        new Flexible(
-                          fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("KK Baru"),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -196,12 +197,13 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
-                        new Flexible(
-                          fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("Surat Pengantar RT/RW"),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -230,12 +232,13 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
                           ),
                         ),
-                        new Flexible(
-                          fit: FlexFit.loose,
-                          child: new Container(
-                            child: new Text("Surat Pengantar RT/RW"),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -289,8 +292,11 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
+
                           child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa"),
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                       ],
                     ),
@@ -299,18 +305,10 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                     padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 10.0),
                     child: new Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        new Container(
-                          width: MediaQuery.of(context).size.width*0.7,
-                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ),
                         new Flexible(
-                          child: new Container(
+                          fit: FlexFit.loose,
+                          child:  new Container(
                             child: new CircleAvatar(
                               child: new Text(
                                 "2",
@@ -326,6 +324,13 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                               shape: BoxShape.circle,
                             ),
                             margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          ),
+                        ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width*0.7,
+                          child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
                           ),
                         ),
                       ],
@@ -358,8 +363,11 @@ class _AlurHapusAnggotaState extends State<AlurHapusAnggota> {
                         ),
                         new Container(
                           width: MediaQuery.of(context).size.width*0.7,
+
                           child: new Text("Surat Pengantar RT/RW ajsabs ajs ajs abcd kaja ka kja skajs a ajks a jK"
-                              + "j AKJa as ka ajs a aks as kja sjka  ka sa"),
+                              + "j AKJa as ka ajs a aks as kja sjka  ka sa",
+                            textAlign: TextAlign.justify,
+                          ),
                         ),
                       ],
                     ),

@@ -59,12 +59,14 @@ class _LoginState extends State<Login> {
 
   // PhoneCodeSent
   codeSent(String verificationId, [int forceResendingToken]) async {
-    _codeTimer = Timer(_timeOut, () {
+    var ok = Timer(_timeOut, () {
       setState(() {
         _codeTimedOut = true;
         _onSubmit = false;
       });
-    }) as bool;
+    });
+
+    _codeTimer = true;
 
     setState(() {
       this._verificationId = verificationId;

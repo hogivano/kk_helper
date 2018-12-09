@@ -13,7 +13,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import 'package:kk_helper/list_kec_kel.dart';
-import 'package:kk_helper/model/data_keluarga.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 import 'package:kk_helper/model/anggota_tambah.dart';
@@ -556,7 +555,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
     } else if (_imageKKLama.length == 0 && _imageAktaKelahiran.length == 0) {
       Fluttertoast.showToast(
           msg:
-              "setiap pertambahan anggota harus ada bukti akta kelahiran/kk lama",
+              "setiap Penambahan anggota harus ada bukti akta kelahiran/kk lama",
           toastLength: Toast.LENGTH_LONG);
       cek = false;
     } else if ((_imageKKLama.length + _imageAktaKelahiran.length) <
@@ -1052,7 +1051,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
               children: <Widget>[
                 new Container(
                   alignment: Alignment.centerLeft,
-                  child: new Text("Jumlah Pertambahan :"),
+                  child: new Text("Jumlah Penambahan :"),
                   padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
                 ),
                 new Container(
@@ -1062,7 +1061,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                     child: new DropdownButton(
                       hint: new Text(
                         _jumlahTambah == 0
-                            ? "pertambahan"
+                            ? "Penambahan"
                             : _jumlahTambah.toString(),
                         style: TextStyle(fontSize: fontForm - 3),
                         textAlign: TextAlign.center,
@@ -1283,7 +1282,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
           ),
           new Container(
             alignment: Alignment.centerLeft,
-            child: new Text("Alasan Pengurangan :"),
+            child: new Text("Alasan Penambahan :"),
             padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
           ),
           new Container(
@@ -1887,7 +1886,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                 title: new Align(
                   alignment: Alignment(-0.15, 0),
                   child: new Text(
-                    "Pertambahan Anggota",
+                    "Penambahan Anggota",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.0,
@@ -1910,7 +1909,7 @@ class _TambahAnggotaState extends State<TambahAnggota> {
                             posForm == 0
                                 ? "Data KK"
                                 : posForm == 1
-                                    ? "Pertambahan Anggota"
+                                    ? "Penambahan Anggota"
                                     : "UPLOAD KELENGKAPAN",
                             textAlign: TextAlign.center,
                             style: TextStyle(

@@ -261,7 +261,7 @@ class _DetailTambahAnggotaState extends State<DetailTambahAnggota> {
                 ),
               ), new Container(
                 alignment: Alignment.centerLeft,
-                child: new Text("Alasan Pengurangan :"),
+                child: new Text("Alasan Penambahan :"),
                 padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
               ), new Container(
                 margin: const EdgeInsets.all(10.0),

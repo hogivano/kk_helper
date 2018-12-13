@@ -66,6 +66,7 @@ class _dashboardState extends State<Dashboard>{
 //    new Connectivity().onConnectivityChanged.listen((result){
 //      Fluttertoast.showToast(msg: result.toString());
 //    });
+    print(widget.firebaseUser.phoneNumber);
     new LocalDisk().getString("user").then((str){
       if (str == null){
         _database.reference().child("user").once().then((DataSnapshot snapshot){
@@ -189,7 +190,7 @@ class _dashboardState extends State<Dashboard>{
                       onPressed: (){
                         Navigator.of(context).push(new PageRouteBuilder(
                             opaque: true,
-                            transitionDuration: const Duration(milliseconds: 500),
+                            transitionDuration: const Duration(milliseconds: 200),
                             pageBuilder: (BuildContext context, _, __) {
                               return new AlurKKBaru(firebaseUser: widget.firebaseUser);
                             },
@@ -255,7 +256,7 @@ class _dashboardState extends State<Dashboard>{
                       onPressed: () {
                         Navigator.of(context).push(new PageRouteBuilder(
                             opaque: true,
-                            transitionDuration: const Duration(milliseconds: 500),
+                            transitionDuration: const Duration(milliseconds: 200),
                             pageBuilder: (BuildContext context, _, __) {
                               return new AlurTambahAnggota(firebaseUser: widget.firebaseUser);
                             },
@@ -321,7 +322,7 @@ class _dashboardState extends State<Dashboard>{
                       onPressed: (){
                         Navigator.of(context).push(new PageRouteBuilder(
                             opaque: true,
-                            transitionDuration: const Duration(milliseconds: 500),
+                            transitionDuration: const Duration(milliseconds: 200),
                             pageBuilder: (BuildContext context, _, __) {
                               return new AlurHapusAnggota(firebaseUser: widget.firebaseUser);
                             },
@@ -387,7 +388,7 @@ class _dashboardState extends State<Dashboard>{
                       onPressed: (){
                         Navigator.of(context).push(new PageRouteBuilder(
                             opaque: true,
-                            transitionDuration: const Duration(milliseconds: 500),
+                            transitionDuration: const Duration(milliseconds: 200),
                             pageBuilder: (BuildContext context, _, __) {
                               return new AlurKKHilang(firebaseUser: widget.firebaseUser);
                             },

@@ -28,8 +28,6 @@ class _LoginState extends State<Login> {
   final TextEditingController _smsCodeController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
-  final TextEditingController _rePasswordController =
-      new TextEditingController();
 
   final FocusNode _noTelpFocus = new FocusNode();
 
@@ -436,13 +434,69 @@ class _LoginState extends State<Login> {
       }
     } else if (status == AuthStatus.EMAIL_AUTH) {
       if (!_onSubmit) {
-        if (_emailController.text.isEmpty ||
-            _passwordController.text.isEmpty ||
-            _rePasswordController.text.isEmpty) {
+        if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
           showInSnackBar("semua harus diisi");
-        } else {}
+        } else {
+          if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(_emailController.text)) {
+            showInSnackBar("format email example@example.com");
+          } else {
+            setState(() {
+              _onSubmit = true;
+            });
+            _signInWithMail();
+          }
+        }
       }
     }
+  }
+
+  void _signInWithMail() {
+    _database.reference().child("user").once().then((DataSnapshot snapshot) {
+      bool cekUser = false;
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values != null) {
+        values.forEach((key, value) {
+          if (value["email"] == _emailController.text) {
+            cekUser = true;
+          }
+        });
+      }
+      if (!cekUser) {
+        showInSnackBar(
+            "email belum terdaftar silahkan untuk register terlebih dahulu");
+        setState(() {
+          _onSubmit = false;
+        });
+      } else {
+        _auth
+            .signInWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text)
+            .then((user) {
+          if (user.isEmailVerified) {
+            setState(() {
+              _onSubmit = false;
+            });
+            _navigationToDashboard(user);
+          } else {
+            setState(() {
+              _onSubmit = false;
+            });
+            showInSnackBar(
+                "email belum terverifikasi silahkan cek email untuk verifikasi");
+          }
+        }, onError: () {
+          showInSnackBar("kata sandi salah");
+        }).catchError((e) {
+          setState(() {
+            _onSubmit = false;
+          });
+          showInSnackBar(
+              "email tidak terdaftar silahkan register terlebih dahulu");
+        });
+      }
+    });
   }
 
   //Widget
@@ -535,51 +589,6 @@ class _LoginState extends State<Login> {
                       fontSize: 10.0,
                     ),
                     hintText: "kata sandi",
-                    border: InputBorder.none,
-                  ),
-                ),
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    boxShadow: [
-                      new BoxShadow(
-                        color: Colors.grey,
-                      )
-                    ]),
-              ),
-            ),
-          ),
-        ),
-        new Align(
-          alignment: Alignment.centerRight,
-          child: new Container(
-            width: MediaQuery.of(context).size.width / 1,
-            margin: const EdgeInsets.fromLTRB(30.0, 5.0, 30.0, 5.0),
-            child: new Material(
-              elevation: 4,
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              child: new Container(
-                width: MediaQuery.of(context).size.width / 1.5,
-                child: new TextFormField(
-                  controller: _rePasswordController,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black54,
-                  ),
-                  validator: (value) {
-                    value.isEmpty
-                        ? print("re-password harus diisi")
-                        : print("re-password sudah diisi");
-                  },
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  decoration: new InputDecoration(
-                    hintStyle: TextStyle(
-                      fontSize: 10.0,
-                    ),
-                    hintText: "ulangi kata sandi",
                     border: InputBorder.none,
                   ),
                 ),

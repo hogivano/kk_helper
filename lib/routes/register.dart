@@ -15,8 +15,6 @@ import 'package:kk_helper/widget/google_icon_btn.dart';
 import 'package:kk_helper/widget/phone_icon_btn.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-enum AuthStatus { GMAIL_AUTH, EMAIL_AUTH, PHONE_AUTH, SMS_AUTH, PROFILE_AUTH }
-
 class _RegisterState extends State<Register> {
   static const String TAG = "AUTH";
   AuthStatus status = AuthStatus.PHONE_AUTH;
@@ -168,6 +166,7 @@ class _RegisterState extends State<Register> {
       new TextEditingController();
   final TextEditingController _smsCodeController = new TextEditingController();
 
+  final TextEditingController _namaMailController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
   final TextEditingController _rePasswordController =
@@ -203,12 +202,13 @@ class _RegisterState extends State<Register> {
 
   // PhoneCodeSent
   codeSent(String verificationId, [int forceResendingToken]) async {
-    _codeTimer = Timer(_timeOut, () {
+    Timer(_timeOut, () {
       setState(() {
         _codeTimedOut = true;
         _onSubmit = false;
       });
-    }) as bool;
+    });
+    _codeTimer = true;
 
     setState(() {
       this._verificationId = verificationId;
@@ -509,13 +509,99 @@ class _RegisterState extends State<Register> {
       }
     } else if (status == AuthStatus.EMAIL_AUTH) {
       if (!_onSubmit) {
-        if (_emailController.text.isEmpty ||
+        if (_namaMailController.text.isEmpty ||
+            _emailController.text.isEmpty ||
             _passwordController.text.isEmpty ||
             _rePasswordController.text.isEmpty) {
           showInSnackBar("semua harus diisi");
-        } else {}
+        } else {
+          if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              .hasMatch(_emailController.text)) {
+            showInSnackBar("format email example@example.com");
+          } else if (_passwordController.text == _rePasswordController.text) {
+            if (_passwordController.text.length < 8) {
+              showInSnackBar("minimal kata sandi 8 digit");
+            } else {
+              setState(() {
+                _onSubmit = true;
+              });
+              _registerWithEmail();
+            }
+          } else {
+            showInSnackBar("kata sandi tidak sama");
+          }
+        }
       }
     }
+  }
+
+  void _registerWithEmail() {
+    _database.reference().child("user").once().then((DataSnapshot snapshot) {
+      bool cekUser = false;
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values != null) {
+        values.forEach((key, value) {
+          if (value["email"] == _emailController.text) {
+            cekUser = true;
+          }
+        });
+      }
+      if (cekUser) {
+        showInSnackBar("email sudah terdaftar silahkan untuk login");
+        setState(() {
+          _onSubmit = false;
+        });
+      } else {
+        _auth
+            .createUserWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text)
+            .then((user) {
+          user.sendEmailVerification().then((e) {
+            DatabaseReference database =
+                _database.reference().child("user").push();
+            database.set({
+              'noTelp': '',
+              'nama': _namaMailController.text,
+              'email': _emailController.text,
+              'image': '',
+              'role': 0,
+            }).then((user) {
+              setState(() {
+                _onSubmit = false;
+              });
+              Fluttertoast.showToast(
+                  msg: "pendaftaran akun telah berhasil silahkan cek email untuk verifikasi", toastLength: Toast.LENGTH_LONG);
+              Navigator.of(context).pushReplacement(
+                  new MaterialPageRoute(builder: (context) => Login()));
+            }).catchError((e) {
+              setState(() {
+                _onSubmit = false;
+              });
+              Fluttertoast.showToast(
+                  msg:
+                      "gagal mendaftarkan silahkan register dengan no telp atau google mail");
+            });
+          }).catchError((e) {
+            setState(() {
+              _onSubmit = false;
+            });
+            Fluttertoast.showToast(msg: "email tidak valid");
+          });
+        }).catchError((e) {
+          setState(() {
+            _onSubmit = false;
+          });
+          Fluttertoast.showToast(
+              msg: "email sudah terdaftar silahkan untuk login");
+        });
+      }
+    }).catchError((error) {
+      setState(() {
+        _onSubmit = false;
+      });
+      showInSnackBar(error.toString());
+    });
   }
 
   void showInSnackBar(String value) {
@@ -607,6 +693,45 @@ class _RegisterState extends State<Register> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        new Align(
+          alignment: Alignment.centerRight,
+          child: new Container(
+            width: MediaQuery.of(context).size.width / 1,
+            margin: const EdgeInsets.fromLTRB(30.0, 5.0, 30.0, 5.0),
+            child: new Material(
+              elevation: 4,
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              child: new Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: new TextFormField(
+                  controller: _namaMailController,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black54,
+                  ),
+                  keyboardType: TextInputType.text,
+                  decoration: new InputDecoration(
+                    hintStyle: TextStyle(
+                      fontSize: 10.0,
+                    ),
+                    hintText: "nama lengkap",
+                    border: InputBorder.none,
+                  ),
+                ),
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Colors.grey,
+                      )
+                    ]),
+              ),
+            ),
+          ),
+        ),
         new Align(
           alignment: Alignment.centerRight,
           child: new Container(
@@ -981,12 +1106,11 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-
-              new Scaffold(
-              key: _scaffoldKey,
-  backgroundColor: Colors.transparent,
-  body: _switchWidget(),
-  ),
+          new Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: Colors.transparent,
+            body: _switchWidget(),
+          ),
           new Container(
             alignment: Alignment(0.0, 0.45),
             child: new RaisedButton(
@@ -1084,6 +1208,8 @@ class _RegisterState extends State<Register> {
     colors: <Color>[Color(0xff66dbff), Color(0xff3ab9e0), Color(0xff168baf)],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 }
+
+enum AuthStatus { GMAIL_AUTH, EMAIL_AUTH, PHONE_AUTH, SMS_AUTH, PROFILE_AUTH }
 
 class Register extends StatefulWidget {
   @override

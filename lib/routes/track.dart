@@ -108,7 +108,7 @@ class _trackState extends State<Track>{
       DataAnggotaKurang data = _searchByKeyAnggotaKurang(key);
       Navigator.of(context).push(new PageRouteBuilder(
           opaque: true,
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (BuildContext context, _, __) {
             return new DetailKurangAnggota(data: data);
           },
@@ -126,7 +126,7 @@ class _trackState extends State<Track>{
       DataAnggotaTambah2 data = _searchByKeyAnggotaTambah(key);
       Navigator.of(context).push(new PageRouteBuilder(
           opaque: true,
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (BuildContext context, _, __) {
             return new DetailTambahAnggota(data: data);
           },
@@ -144,7 +144,7 @@ class _trackState extends State<Track>{
       DataHilangKK data = _searchByKeyHilangKK(key);
       Navigator.of(context).push(new PageRouteBuilder(
           opaque: true,
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (BuildContext context, _, __) {
             return new DetailKKHilang(data: data);
           },
@@ -162,7 +162,7 @@ class _trackState extends State<Track>{
       DataTambahKK data = _searchByKeyTambahKK(key);
       Navigator.of(context).push(new PageRouteBuilder(
           opaque: true,
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(milliseconds: 200),
           pageBuilder: (BuildContext context, _, __) {
             return new DetailKKBaru(data: data);
           },
